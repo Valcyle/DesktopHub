@@ -73,3 +73,18 @@ QString AppSettings::translationFile() const
     // Compiled by qt_add_translations and embedded at this resource path.
     return QStringLiteral(":/i18n/desktophub_%1.qm").arg(m_language);
 }
+
+bool AppSettings::checkForUpdates() const
+{
+    return m_checkForUpdates;
+}
+
+void AppSettings::setCheckForUpdates(bool enabled)
+{
+    if (m_checkForUpdates == enabled) {
+        return;
+    }
+
+    m_checkForUpdates = enabled;
+    emit checkForUpdatesChanged();
+}

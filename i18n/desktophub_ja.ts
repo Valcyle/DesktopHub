@@ -452,6 +452,10 @@ An empty dashboard has been started.</source>
       <translation>Desktop Hub</translation>
     </message>
     <message>
+      <source>Update failed</source>
+      <translation>更新に失敗しました</translation>
+    </message>
+    <message>
       <source>Notice</source>
       <translation>お知らせ</translation>
     </message>
@@ -478,6 +482,26 @@ An empty dashboard has been started.</source>
     <message>
       <source>Quit</source>
       <translation>終了</translation>
+    </message>
+    <message>
+      <source>Update available</source>
+      <translation>アップデートがあります</translation>
+    </message>
+    <message>
+      <source>Desktop Hub %1 is available. You are using %2.</source>
+      <translation>Desktop Hub %1 が利用可能です。現在のバージョンは %2 です。</translation>
+    </message>
+    <message>
+      <source>Release notes</source>
+      <translation>リリースノート</translation>
+    </message>
+    <message>
+      <source>Later</source>
+      <translation>あとで</translation>
+    </message>
+    <message>
+      <source>Install now</source>
+      <translation>今すぐインストール</translation>
     </message>
     <message>
       <source>Data notice</source>
@@ -563,6 +587,34 @@ An empty dashboard has been started.</source>
       <translation>ログとアプリのデータはこのデバイス内にのみ保存されます。</translation>
     </message>
     <message>
+      <source>Updates</source>
+      <translation>アップデート</translation>
+    </message>
+    <message>
+      <source>Current version: %1</source>
+      <translation>現在のバージョン: %1</translation>
+    </message>
+    <message>
+      <source>Check for updates automatically on startup</source>
+      <translation>起動時に自動でアップデートを確認</translation>
+    </message>
+    <message>
+      <source>Check for updates</source>
+      <translation>アップデートを確認</translation>
+    </message>
+    <message>
+      <source>Download and install</source>
+      <translation>ダウンロードしてインストール</translation>
+    </message>
+    <message>
+      <source>Release notes</source>
+      <translation>リリースノート</translation>
+    </message>
+    <message>
+      <source>Update checks contact GitHub only when enabled or requested. No personal data is sent.</source>
+      <translation>アップデート確認は有効時または手動実行時のみ GitHub に接続します。個人情報は送信しません。</translation>
+    </message>
+    <message>
       <source>Version</source>
       <translation>バージョン</translation>
     </message>
@@ -577,6 +629,18 @@ An empty dashboard has been started.</source>
     <message>
       <source>Cancel</source>
       <translation>キャンセル</translation>
+    </message>
+    <message>
+      <source>Install update</source>
+      <translation>アップデートをインストール</translation>
+    </message>
+    <message>
+      <source>Desktop Hub will close and restart to install version %1.</source>
+      <translation>バージョン %1 をインストールするため、Desktop Hub を終了して再起動します。</translation>
+    </message>
+    <message>
+      <source>Install</source>
+      <translation>インストール</translation>
     </message>
   </context>
   <context>
@@ -611,6 +675,97 @@ An empty dashboard has been started.</source>
     <message>
       <source>Another instance is already running.</source>
       <translation>既に別のインスタンスが起動しています。</translation>
+    </message>
+  </context>
+  <context>
+    <name>UpdateService</name>
+    <message>
+      <source>Not checked yet.</source>
+      <translation>まだ確認していません。</translation>
+    </message>
+    <message>
+      <source>Checking for updates...</source>
+      <translation>アップデートを確認しています...</translation>
+    </message>
+    <message>
+      <source>Downloading update...</source>
+      <translation>アップデートをダウンロードしています...</translation>
+    </message>
+    <message>
+      <source>Could not download the checksum: %1</source>
+      <translation>チェックサムをダウンロードできませんでした: %1</translation>
+    </message>
+    <message>
+      <source>The published checksum does not include the update archive.</source>
+      <translation>公開されたチェックサムに更新アーカイブが含まれていません。</translation>
+    </message>
+    <message>
+      <source>Could not download the update: %1</source>
+      <translation>アップデートをダウンロードできませんでした: %1</translation>
+    </message>
+    <message>
+      <source>The downloaded update failed verification.</source>
+      <translation>ダウンロードしたアップデートの検証に失敗しました。</translation>
+    </message>
+    <message>
+      <source>Update available: %1</source>
+      <translation>アップデートがあります: %1</translation>
+    </message>
+    <message>
+      <source>Could not read %1</source>
+      <translation>%1 を読み込めませんでした</translation>
+    </message>
+    <message>
+      <source>No updates have been published yet.</source>
+      <translation>まだアップデートは公開されていません。</translation>
+    </message>
+    <message>
+      <source>Update check failed: %1</source>
+      <translation>アップデートの確認に失敗しました: %1</translation>
+    </message>
+    <message>
+      <source>The update feed could not be read.</source>
+      <translation>アップデート情報を読み込めませんでした。</translation>
+    </message>
+    <message>
+      <source>The update feed contains an invalid version.</source>
+      <translation>アップデート情報のバージョンが不正です。</translation>
+    </message>
+    <message>
+      <source>The release does not provide a ZIP archive and checksum.</source>
+      <translation>リリースに ZIP アーカイブとチェックサムが含まれていません。</translation>
+    </message>
+    <message>
+      <source>You are using the latest version (%1).</source>
+      <translation>最新バージョン (%1) を使用しています。</translation>
+    </message>
+    <message>
+      <source>The update could not be prepared in the temporary folder.</source>
+      <translation>一時フォルダにアップデートを準備できませんでした。</translation>
+    </message>
+    <message>
+      <source>The update archive could not be written.</source>
+      <translation>アップデートアーカイブを書き込めませんでした。</translation>
+    </message>
+    <message>
+      <source>The update could not be extracted.</source>
+      <translation>アップデートを展開できませんでした。</translation>
+    </message>
+    <message>
+      <source>This build cannot self-update because DesktopHubUpdater.exe is missing.</source>
+      <translation>DesktopHubUpdater.exe がないため、このビルドは自己更新できません。</translation>
+    </message>
+    <message>
+      <source>The updater could not be started.</source>
+      <translation>アップデーターを起動できませんでした。</translation>
+    </message>
+    <message>
+      <source>Installing update... Desktop Hub will restart.</source>
+      <translation>アップデートをインストールしています... Desktop Hub は再起動します。</translation>
+    </message>
+    <message>
+      <source>Update failed.</source>
+      <translation>アップデートに失敗しました。</translation>
     </message>
   </context>
 </TS>

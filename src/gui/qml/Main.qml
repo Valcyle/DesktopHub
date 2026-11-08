@@ -62,6 +62,23 @@ ApplicationWindow {
         }
     }
 
+    Connections {
+        target: App.updates
+
+        function onUpdateFound(automatic) {
+            if (automatic) {
+                updateDialog.open()
+            }
+        }
+
+        function onErrorOccurred(message) {
+            errorDialog.title = qsTr("Update failed")
+            errorDialog.message = message
+            errorDialog.retryable = false
+            errorDialog.open()
+        }
+    }
+
     Dialog {
         id: errorDialog
 
@@ -157,6 +174,77 @@ ApplicationWindow {
             onActivated: {
                 root.allowQuit = true
                 Qt.quit()
+            }
+        }
+    }
+
+    Dialog {
+        id: updateDialog
+
+        modal: true
+        anchors.centerIn: parent
+        width: 540
+        padding: 24
+        title: qsTr("Update available")
+        closePolicy: Popup.CloseOnEscape
+
+        contentItem: ColumnLayout {
+            spacing: 12
+
+            Text {
+                Layout.fillWidth: true
+                text: qsTr("Desktop Hub %1 is available. You are using %2.")
+                          .arg(App.updates.latestVersion)
+                          .arg(App.updates.currentVersion)
+                color: Theme.textPrimary
+                font.pixelSize: 13
+                wrapMode: Text.WordWrap
+            }
+
+            Text {
+                Layout.fillWidth: true
+                visible: App.updates.releaseNotes.length > 0
+                text: qsTr("Release notes")
+                color: Theme.textPrimary
+                font.pixelSize: 13
+                font.bold: true
+            }
+
+            Text {
+                Layout.fillWidth: true
+                Layout.maximumHeight: 180
+                visible: App.updates.releaseNotes.length > 0
+                text: App.updates.releaseNotes
+                color: Theme.textSecondary
+                font.pixelSize: 12
+                wrapMode: Text.WordWrap
+                clip: true
+            }
+        }
+
+        footer: DialogButtonBox {
+            Button {
+                text: qsTr("Later")
+                DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+                onClicked: updateDialog.close()
+            }
+
+            Button {
+                text: qsTr("Install now")
+                DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+                onClicked: {
+                    updateDialog.close()
+                    App.updates.downloadAndInstall()
+                }
+            }
+        }
+
+        Shortcut {
+            sequence: "Return"
+            enabled: updateDialog.visible
+            onActivated: {
+                updateDialog.close()
+                App.updates.downloadAndInstall()
             }
         }
     }

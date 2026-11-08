@@ -10,6 +10,7 @@
 #include "models/HomeModel.h"
 #include "models/ItemFilterModel.h"
 #include "models/ItemModel.h"
+#include "services/UpdateService.h"
 
 class AppSettings;
 
@@ -25,6 +26,7 @@ class AppController : public QObject
     Q_PROPERTY(CategoryModel *categories READ categories CONSTANT)
     Q_PROPERTY(ItemFilterModel *filteredItems READ filteredItems CONSTANT)
     Q_PROPERTY(HomeModel *home READ home CONSTANT)
+    Q_PROPERTY(UpdateService *updates READ updates CONSTANT)
     Q_PROPERTY(QVariantList categoryOptions READ categoryOptions NOTIFY categoryOptionsChanged)
     Q_PROPERTY(QString searchText READ searchText WRITE setSearchText NOTIFY searchTextChanged)
     Q_PROPERTY(QString startupWarning READ startupWarning NOTIFY startupWarningChanged)
@@ -42,6 +44,7 @@ public:
     CategoryModel *categories() const;
     ItemFilterModel *filteredItems() const;
     HomeModel *home() const;
+    UpdateService *updates() const;
     QVariantList categoryOptions() const;
 
     QString searchText() const;
@@ -86,6 +89,7 @@ private:
     CategoryModel *m_categories = nullptr;
     ItemFilterModel *m_filteredItems = nullptr;
     HomeModel *m_home = nullptr;
+    UpdateService *m_updates = nullptr;
     AppSettings *m_settings = nullptr;
     QString m_searchText;
     QString m_startupWarning;

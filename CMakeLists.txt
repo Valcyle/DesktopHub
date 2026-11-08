@@ -14,6 +14,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(Qt6 6.5 REQUIRED COMPONENTS
     Core
     Gui
+    Network
     Qml
     Quick
     QuickControls2
@@ -54,6 +55,8 @@ qt_add_executable(DesktopHub
     src/services/Logger.cpp
     src/services/SingleInstance.h
     src/services/SingleInstance.cpp
+    src/services/UpdateService.h
+    src/services/UpdateService.cpp
 )
 
 # All QML files are registered at the root of the "DesktopHub" module.
@@ -68,6 +71,7 @@ set(DESKTOPHUB_QML_FILES
     src/gui/qml/ItemDialog.qml
     src/gui/qml/CategoryDialog.qml
     src/gui/qml/HubSearchField.qml
+    src/gui/qml/HubCheckBox.qml
 )
 
 foreach(qml_file IN LISTS DESKTOPHUB_QML_FILES)
@@ -110,10 +114,44 @@ target_include_directories(DesktopHub PRIVATE
 target_link_libraries(DesktopHub PRIVATE
     Qt6::Core
     Qt6::Gui
+    Qt6::Network
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
 )
+
+# The application version is also used by the in-app updater.
+target_compile_definitions(DesktopHub PRIVATE
+    DESKTOPHUB_VERSION="${PROJECT_VERSION}"
+)
+
+# Standalone replacement helper for the portable update flow. It intentionally
+# links no Qt libraries so it can run from a temporary directory.
+if(WIN32)
+    add_executable(DesktopHubUpdater
+        src/updater/main.cpp
+    )
+    set_target_properties(DesktopHubUpdater PROPERTIES
+        WIN32_EXECUTABLE TRUE
+    )
+    target_compile_features(DesktopHubUpdater PRIVATE cxx_std_17)
+    if(MSVC)
+        target_compile_options(DesktopHubUpdater PRIVATE /W4 /utf-8)
+    else()
+        target_compile_options(DesktopHubUpdater PRIVATE -Wall -Wextra)
+    endif()
+    target_link_libraries(DesktopHubUpdater PRIVATE shell32)
+    if(MINGW)
+        # wWinMain is the entry point, and the updater must be a standalone
+        # executable: it runs from a temporary folder while replacing the app.
+        target_link_options(DesktopHubUpdater PRIVATE
+            -municode
+            -static
+            -static-libgcc
+            -static-libstdc++
+        )
+    endif()
+endif()
 
 if(WIN32)
     # Shell icon extraction and COM initialization.

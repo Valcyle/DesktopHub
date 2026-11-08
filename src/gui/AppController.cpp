@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStringList>
+#include <QTimer>
 
 #include "core/AppPaths.h"
 #include "core/AppSettings.h"
@@ -16,6 +17,7 @@ AppController::AppController(QObject *parent)
     , m_categories(new CategoryModel(this))
     , m_filteredItems(new ItemFilterModel(this))
     , m_home(new HomeModel(m_items, m_categories, this))
+    , m_updates(new UpdateService(this))
 {
     m_filteredItems->setSourceItemModel(m_items);
 }
@@ -27,6 +29,8 @@ void AppController::initialize(AppSettings *settings)
     // Language changes are part of the settings and must be persisted.
     if (m_settings) {
         connect(m_settings, &AppSettings::languageChanged, this, [this]() { save(); });
+        connect(m_settings, &AppSettings::checkForUpdatesChanged,
+                this, [this]() { save(); });
     }
 
     // Every successful item change is written immediately.
@@ -40,6 +44,19 @@ void AppController::initialize(AppSettings *settings)
             this, &AppController::onCategoriesChanged);
 
     load();
+
+    // The singleton is constructed before the translator is installed, so
+    // refresh the initial status text after the language is available.
+    m_updates->retranslateUi();
+
+    // Automatic update checks are optional and start after the window is up.
+    if (m_settings && m_settings->checkForUpdates()) {
+        QTimer::singleShot(3000, this, [this]() {
+            if (m_settings && m_settings->checkForUpdates()) {
+                m_updates->checkForUpdates(true);
+            }
+        });
+    }
 }
 
 ItemModel *AppController::items() const
@@ -60,6 +77,11 @@ ItemFilterModel *AppController::filteredItems() const
 HomeModel *AppController::home() const
 {
     return m_home;
+}
+
+UpdateService *AppController::updates() const
+{
+    return m_updates;
 }
 
 QVariantList AppController::categoryOptions() const
@@ -194,7 +216,9 @@ bool AppController::save()
 
     QString error;
     const QString language = m_settings ? m_settings->language() : QStringLiteral("en");
-    if (!JsonStorage::save(m_items->items(), m_categories->categories(), language, &error)) {
+    const bool checkForUpdates = m_settings ? m_settings->checkForUpdates() : true;
+    if (!JsonStorage::save(m_items->items(), m_categories->categories(), language,
+                           checkForUpdates, &error)) {
         setUnsavedChanges(true);
         Logger::error(QStringLiteral("Saving data failed: %1").arg(error));
         emit errorOccurred(tr("Could not save data"), error, true);
@@ -248,6 +272,7 @@ QString AppController::nameFromTarget(const QString &type, const QString &target
 void AppController::refreshTranslations()
 {
     m_home->rebuild();
+    m_updates->retranslateUi();
 }
 
 void AppController::onCategoriesChanged()
@@ -278,6 +303,9 @@ void AppController::load()
 
     if (m_settings && !result.language.isEmpty()) {
         m_settings->setLanguage(result.language);
+    }
+    if (m_settings) {
+        m_settings->setCheckForUpdates(result.checkForUpdates);
     }
 
     m_readOnly = result.readOnly;

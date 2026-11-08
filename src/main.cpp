@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     // directories used by QStandardPaths for data and logs.
     QCoreApplication::setOrganizationName(QStringLiteral("Valcyle"));
     QCoreApplication::setApplicationName(QStringLiteral("DesktopHub"));
-    QCoreApplication::setApplicationVersion(QStringLiteral("0.1.0"));
+    QCoreApplication::setApplicationVersion(QStringLiteral(DESKTOPHUB_VERSION));
 
     Logger::initialize();
     Logger::info(QStringLiteral("Starting Desktop Hub %1 (Qt %2)")

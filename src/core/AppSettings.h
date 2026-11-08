@@ -18,6 +18,8 @@ class AppSettings : public QObject
     Q_PROPERTY(QString theme READ theme CONSTANT)
     Q_PROPERTY(QString dataLocation READ dataLocation CONSTANT)
     Q_PROPERTY(QString translationFile READ translationFile CONSTANT)
+    Q_PROPERTY(bool checkForUpdates READ checkForUpdates WRITE setCheckForUpdates
+                   NOTIFY checkForUpdatesChanged)
 
 public:
     explicit AppSettings(QObject *parent = nullptr);
@@ -29,9 +31,14 @@ public:
     QString dataLocation() const;
     QString translationFile() const;
 
+    bool checkForUpdates() const;
+    void setCheckForUpdates(bool enabled);
+
 signals:
     void languageChanged();
+    void checkForUpdatesChanged();
 
 private:
     QString m_language;
+    bool m_checkForUpdates = true;
 };

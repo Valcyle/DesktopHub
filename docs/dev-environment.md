@@ -56,6 +56,29 @@ Qt 6.12 ships a `SearchField` type through the Qt Quick Controls styles. An unqu
 
 Home section headers and category names are produced in C++. They are rebuilt after a language change through `AppController::refreshTranslations()`.
 
+## Packaging and updates
+
+- Packaging: `scripts/package.ps1` (Release build, `windeployqt`, ZIP, SHA-256).
+- ZIP extraction during updates uses Windows 11's bundled `tar.exe`.
+- `DesktopHubUpdater.exe` is built with MinGW's `-static` runtime flags so it can
+  run from the temporary update folder without the Qt or MinGW DLLs.
+- The application checks `https://api.github.com/repos/Valcyle/DesktopHub/releases/latest`.
+  For local testing, set `DESKTOPHUB_UPDATE_FEED` to a feed JSON path or URL.
+- `scripts/package.ps1` adds Qt's LGPL notices under `LICENSES/Qt/` in the
+  package. Those files apply to Qt only; Desktop Hub's own license is undecided.
+
+## Release checklist
+
+1. Update the version in `project(DesktopHub VERSION ...)`.
+2. Run `scripts/package.ps1`.
+3. Create a GitHub Release with tag `v<version>`.
+4. Upload `dist/DesktopHub-<version>-win64.zip` and `dist/SHA256SUMS.txt`.
+5. Verify the update on a machine that has the previous version installed.
+6. Keep the release notes short; they are shown in the update dialog.
+
+Builds are currently unsigned, so SmartScreen may warn. Code signing should be
+added before a wider public release.
+
 ## Verification
 
 Phase 0 is complete when the following commands configure, build, and start a Qt Quick window:

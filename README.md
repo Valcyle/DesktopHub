@@ -22,11 +22,12 @@ Desktop Hub is a Windows desktop dashboard that keeps the applications, folders,
 - Read-only mode when the data file cannot be prepared, with editing disabled
 - Warning before quitting when changes could not be saved
 - Single-instance enforcement that raises the existing window
+- In-app updates: check GitHub Releases, verify SHA-256, replace the portable build, and restart
 - Local logging with 1 MB rotation and three generations
 - Recovery flow when the data file is corrupt
 - Responsive layout that works down to the 900 x 600 minimum size
 
-Planned: final UI polish, accessibility review, release packaging, and license texts.
+Planned: final UI polish, accessibility review, release packaging polish, code signing, and license selection.
 
 ## Requirements
 
@@ -56,6 +57,23 @@ You can also open the project folder directly in Qt Creator or in VS Code with t
 
 A release build is available through the `mingw-release` preset.
 
+## Packaging
+
+Builds a portable folder, ZIP, and checksum:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/package.ps1
+```
+
+Outputs:
+
+- `dist/DesktopHub-<version>-win64/` — the portable application folder
+- `dist/DesktopHub-<version>-win64.zip` — the release asset
+- `dist/SHA256SUMS.txt` — the checksum consumed by the updater
+
+The script runs `windeployqt`, bundles `DesktopHubUpdater.exe`, and places the
+Qt LGPL notices under `LICENSES/Qt/`. `dist/` is not committed.
+
 ## Data storage
 
 - Data file: `data.json` under `QStandardPaths::AppDataLocation`
@@ -66,6 +84,23 @@ A release build is available through the `mingw-release` preset.
 - Logs: `logs/desktophub.log` under `QStandardPaths::AppLocalDataLocation`
 - Log rotation: at 1 MB, keeping three generations in total
 - Only one instance can run; a second launch raises the existing window
+
+## Updates
+
+- The update feed is the latest GitHub Release:
+  `https://api.github.com/repos/Valcyle/DesktopHub/releases/latest`
+- Publish `DesktopHub-<version>-win64.zip` and `SHA256SUMS.txt` as release assets.
+- Startup checks are enabled by default and can be disabled in Settings. Manual
+  checks are available at any time.
+- Installation is: download → SHA-256 verification → extract with Windows
+  `tar.exe` → `DesktopHubUpdater.exe` waits for the app to exit → files are
+  replaced → the app restarts.
+- The portable folder must be writable by the current user.
+- Builds are currently unsigned. Windows SmartScreen may warn on first launch.
+  The checksum protects against corrupt downloads, not against a compromised
+  GitHub account; code signing is the next step for release hardening.
+- The app sends no personal data. GitHub receives the HTTP request metadata
+  (IP address and user agent) only when a check runs.
 
 Application data and logs can contain local file paths, including your Windows user name, so review them before sharing. Runtime data, backups, and logs are excluded from this repository by `.gitignore`.
 
@@ -92,15 +127,9 @@ DesktopHub/
 │   ├── requirements.md
 │   └── third-party-licenses.md
 ├── i18n/
-│   ├── desktophub_en.ts
-│   └── desktophub_ja.ts
+├── scripts/         # package.ps1
 ├── src/
-│   ├── main.cpp
-│   ├── core/        # paths, settings, shared data types
-│   ├── gui/         # QML-facing controller and UI
-│   │   └── qml/     # Main, pages, dialogs, search field, Theme
-│   ├── models/      # item, category, filter, and Home section models
-│   └── services/    # JSON storage and shell icon provider
+├── third_party/     # Qt LGPL notices
 └── README.md
 ```
 
@@ -111,6 +140,8 @@ Automated tests are not set up yet; the current verification is manual.
 - [Requirements](docs/requirements.md) — MVP scope and behavior
 - [Development environment](docs/dev-environment.md) — toolchain versions and build decisions
 - [Third-party licenses](docs/third-party-licenses.md) — dependencies and license obligations
+- [Qt license notices](third_party/qt/NOTICE.md) — Qt-only LGPLv3 notices
+- [Manual test checklist](docs/testing.md) — release verification steps
 
 ## Privacy
 
@@ -118,4 +149,11 @@ Desktop Hub works fully offline. It does not send telemetry or usage data.
 
 ## License
 
-A license has not been chosen yet. The license and distribution model will be decided before the first public release. The product name and logo are separate from the source code license.
+Desktop Hub's own source-code license has not been chosen yet. The license and
+distribution model will be decided before the first public release. The product
+name and logo are separate from the source code license.
+
+Qt is used under the LGPLv3. Its license texts and notices are stored in
+[`third_party/qt/`](third_party/qt/NOTICE.md) and copied into release packages
+under `LICENSES/Qt/`. Those files apply to Qt only; they do not set the license
+of Desktop Hub.

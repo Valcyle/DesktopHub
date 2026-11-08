@@ -15,6 +15,9 @@ This file records third-party components used by Desktop Hub and the obligations
 ### Obligations
 
 - Distribute the full text of the LGPLv3 and the Qt copyright notices with the application.
+  The texts are stored in `third_party/qt/` and copied into the package under
+  `LICENSES/Qt/`. They apply to Qt only; Desktop Hub's own source license is
+  still undecided.
 - Keep Qt dynamically linked so users can replace the Qt libraries with a compatible version.
 - Provide the corresponding source code for the Qt version used, or a written offer to provide it, as required by the LGPLv3.
 - Do not statically link Qt or add restrictions that prevent users from relinking.

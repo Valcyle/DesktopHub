@@ -174,6 +174,17 @@ Launching:
 - If the existing instance cannot be reached, inform the user and exit.
 - This prevents concurrent JSON writes.
 
+### 5.9 Updates
+
+- Distribution format: portable ZIP (no administrator privileges).
+- Check the latest GitHub Release over HTTPS at startup (enabled by default, can be disabled in Settings) and on demand.
+- Compare semantic versions and show the release notes.
+- Download `DesktopHub-<version>-win64.zip` and `SHA256SUMS.txt`, verify SHA-256, extract with Windows `tar.exe`, and hand replacement to `DesktopHubUpdater.exe`.
+- The updater waits for the application to exit, replaces the files, and restarts the application.
+- Unsigned builds are allowed for now; the checksum detects corrupt downloads but is not a substitute for code signing.
+- Update checks send no personal data; GitHub receives the request metadata (IP address and user agent).
+- Automatic checks can be disabled in Settings.
+
 ## 6. Data model (schemaVersion 1)
 
 ```json
@@ -195,7 +206,8 @@ Launching:
   ],
   "settings": {
     "language": "en",
-    "theme": "dark"
+    "theme": "dark",
+    "checkForUpdates": true
   }
 }
 ```
@@ -225,6 +237,7 @@ Launching:
 | --- | --- | --- | --- |
 | `language` | string | yes | `en` or `ja` |
 | `theme` | string | yes | Fixed to `dark` in the MVP |
+| `checkForUpdates` | boolean | no | Automatic update checks; defaults to `true` |
 
 ### Load rules
 
@@ -263,10 +276,10 @@ Desktop widgets, floating panels, advanced shortcuts, workspaces, batch launchin
 
 ### Security and privacy
 
-- Fully offline in the MVP.
+- Fully offline except for the update check described in 5.9.
 - No administrator privileges required.
 - No secrets in logs.
-- No external communication in the MVP.
+- No telemetry or usage reporting.
 
 ### Accessibility
 

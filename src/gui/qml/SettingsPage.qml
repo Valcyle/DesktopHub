@@ -260,6 +260,128 @@ Item {
                 }
             }
 
+            Rectangle {
+                Layout.fillWidth: true
+                implicitHeight: updateColumn.implicitHeight + 48
+                radius: Theme.cardRadius
+                color: Theme.surface
+                border.width: 1
+                border.color: Theme.border
+
+                ColumnLayout {
+                    id: updateColumn
+                    anchors.fill: parent
+                    anchors.margins: 24
+                    spacing: 12
+
+                    Text {
+                        text: qsTr("Updates")
+                        color: Theme.textPrimary
+                        font.pixelSize: 16
+                        font.bold: true
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 12
+
+                        Text {
+                            text: qsTr("Current version: %1").arg(Qt.application.version)
+                            color: Theme.textSecondary
+                            font.pixelSize: 12
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Text {
+                            Layout.maximumWidth: 360
+                            horizontalAlignment: Text.AlignRight
+                            text: App.updates.statusText
+                            color: App.updates.available ? Theme.accent : Theme.textSecondary
+                            font.pixelSize: 12
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    HubCheckBox {
+                        text: qsTr("Check for updates automatically on startup")
+                        checked: AppSettings.checkForUpdates
+                        enabled: !App.readOnly
+                        onClicked: AppSettings.checkForUpdates = checked
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 12
+
+                        Button {
+                            text: qsTr("Check for updates")
+                            enabled: !App.updates.busy
+                            onClicked: App.updates.checkForUpdates(false)
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Button {
+                            text: qsTr("Download and install")
+                            visible: App.updates.available && !App.updates.busy
+                            onClicked: installConfirmDialog.open()
+                        }
+                    }
+
+                    ProgressBar {
+                        Layout.fillWidth: true
+                        visible: App.updates.busy
+                        from: 0
+                        to: 100
+                        indeterminate: App.updates.progress < 0
+                        value: Math.max(0, App.updates.progress)
+                    }
+
+                    Text {
+                        Layout.fillWidth: true
+                        visible: App.updates.errorText.length > 0
+                        text: App.updates.errorText
+                        color: "#ff9b9b"
+                        font.pixelSize: 12
+                        wrapMode: Text.WordWrap
+                    }
+
+                    Text {
+                        visible: App.updates.releaseNotes.length > 0
+                        text: qsTr("Release notes")
+                        color: Theme.textPrimary
+                        font.pixelSize: 13
+                        font.bold: true
+                    }
+
+                    TextArea {
+                        Layout.fillWidth: true
+                        Layout.minimumHeight: 64
+                        Layout.preferredHeight: Math.min(contentHeight, 160)
+                        visible: App.updates.releaseNotes.length > 0
+                        text: App.updates.releaseNotes
+                        readOnly: true
+                        wrapMode: TextArea.Wrap
+                        selectByMouse: true
+                        color: Theme.textSecondary
+                        font.pixelSize: 12
+                    }
+
+                    Text {
+                        Layout.fillWidth: true
+                        text: qsTr("Update checks contact GitHub only when enabled or requested. No personal data is sent.")
+                        color: Theme.textSecondary
+                        font.pixelSize: 11
+                        wrapMode: Text.WordWrap
+                    }
+                }
+            }
+
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 16
@@ -328,6 +450,49 @@ Item {
             onActivated: {
                 App.deleteCategory(page.pendingCategoryId)
                 deleteCategoryDialog.close()
+            }
+        }
+    }
+
+    Dialog {
+        id: installConfirmDialog
+        modal: true
+        anchors.centerIn: parent
+        width: 480
+        padding: 24
+        title: qsTr("Install update")
+
+        contentItem: Text {
+            width: installConfirmDialog.availableWidth
+            text: qsTr("Desktop Hub will close and restart to install version %1.")
+                      .arg(App.updates.latestVersion)
+            color: Theme.textPrimary
+            wrapMode: Text.WordWrap
+        }
+
+        footer: DialogButtonBox {
+            Button {
+                text: qsTr("Cancel")
+                DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+                onClicked: installConfirmDialog.close()
+            }
+
+            Button {
+                text: qsTr("Install")
+                DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+                onClicked: {
+                    installConfirmDialog.close()
+                    App.updates.downloadAndInstall()
+                }
+            }
+        }
+
+        Shortcut {
+            sequence: "Return"
+            enabled: installConfirmDialog.visible
+            onActivated: {
+                installConfirmDialog.close()
+                App.updates.downloadAndInstall()
             }
         }
     }

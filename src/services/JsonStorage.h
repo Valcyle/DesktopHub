@@ -11,6 +11,7 @@ struct StorageLoadResult
     QVector<Item> items;
     QVector<Category> categories;
     QString language;          // Empty when the stored language is unknown.
+    bool checkForUpdates = true;
     int skippedItems = 0;
     int skippedCategories = 0;
     int uncategorizedItems = 0; // Items whose category no longer exists.
@@ -35,5 +36,6 @@ public:
     static bool save(const QVector<Item> &items,
                      const QVector<Category> &categories,
                      const QString &language,
+                     bool checkForUpdates,
                      QString *errorMessage);
 };

@@ -6,6 +6,7 @@ spec.md
 build/
 build-*/
 out/
+dist/
 
 # CMake user-specific settings
 CMakeUserPresets.json

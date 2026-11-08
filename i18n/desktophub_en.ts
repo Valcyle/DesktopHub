@@ -443,6 +443,10 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Update failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -468,6 +472,26 @@ An empty dashboard has been started.</source>
     </message>
     <message>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Desktop Hub %1 is available. You are using %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Release notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -554,6 +578,34 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates automatically on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download and install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Release notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update checks contact GitHub only when enabled or requested. No personal data is sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
@@ -567,6 +619,18 @@ An empty dashboard has been started.</source>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Desktop Hub will close and restart to install version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -601,6 +665,97 @@ An empty dashboard has been started.</source>
     </message>
     <message>
         <source>Another instance is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UpdateService</name>
+    <message>
+        <source>Not checked yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not download the checksum: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The published checksum does not include the update archive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not download the update: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The downloaded update failed verification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not read %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No updates have been published yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update check failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The update feed could not be read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The update feed contains an invalid version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The release does not provide a ZIP archive and checksum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using the latest version (%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The update could not be prepared in the temporary folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The update archive could not be written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The update could not be extracted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This build cannot self-update because DesktopHubUpdater.exe is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The updater could not be started.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installing update... Desktop Hub will restart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update failed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

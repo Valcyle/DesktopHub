@@ -241,7 +241,7 @@ Dialog {
             }
         }
 
-        CheckBox {
+        HubCheckBox {
             id: favoriteBox
             text: qsTr("Add to favorites")
         }

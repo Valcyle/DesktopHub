@@ -131,6 +131,11 @@ StorageLoadResult JsonStorage::load()
         result.language = language;
     }
 
+    const QJsonValue updateValue = settings.value(QStringLiteral("checkForUpdates"));
+    if (updateValue.isBool()) {
+        result.checkForUpdates = updateValue.toBool();
+    }
+
     QVector<Category> loadedCategories;
     QSet<QString> categoryIds;
     QSet<QString> categoryNamesLower;
@@ -240,6 +245,7 @@ StorageLoadResult JsonStorage::load()
 bool JsonStorage::save(const QVector<Item> &items,
                        const QVector<Category> &categories,
                        const QString &language,
+                       bool checkForUpdates,
                        QString *errorMessage)
 {
     const QString path = AppPaths::dataFilePath();
@@ -273,6 +279,7 @@ bool JsonStorage::save(const QVector<Item> &items,
     QJsonObject settings;
     settings.insert(QStringLiteral("language"), language);
     settings.insert(QStringLiteral("theme"), QStringLiteral("dark"));
+    settings.insert(QStringLiteral("checkForUpdates"), checkForUpdates);
 
     QJsonObject root;
     root.insert(QStringLiteral("schemaVersion"), 1);
