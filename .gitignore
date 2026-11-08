@@ -1,0 +1,30 @@
+# Local notes and drafts (not part of the public repository)
+spec.md
+*.local.md
+
+# Build output
+build/
+build-*/
+out/
+
+# CMake user-specific settings
+CMakeUserPresets.json
+
+# IDE and editor state
+.vs/
+.vscode/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+
+# Runtime data, backups, and logs (may contain local user paths)
+data.json
+data.json.bak
+data.corrupt-*.json
+logs/
+*.log
+
+# Environment files and secrets
+.env
+.env.*
