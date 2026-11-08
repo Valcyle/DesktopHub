@@ -15,13 +15,78 @@
 #include <QProcess>
 #include <QStandardPaths>
 #include <QTimer>
+#include <QVector>
 #include <QVersionNumber>
 
 #include "services/Logger.h"
 
 namespace {
 constexpr auto productionFeed =
-    "https://api.github.com/repos/Valcyle/DesktopHub/releases/latest";
+    "https://api.github.com/repos/Valcyle/DesktopHub/releases?per_page=20";
+
+struct ReleaseInfo
+{
+    QString version;
+    QString notes;
+    QUrl zipUrl;
+    QUrl checksumUrl;
+    QVersionNumber parsedVersion;
+
+    bool isValid() const
+    {
+        return !parsedVersion.isNull() && !zipUrl.isEmpty() && !checksumUrl.isEmpty();
+    }
+};
+
+QString normalizedVersion(QString tag)
+{
+    tag = tag.trimmed();
+    if (tag.startsWith(QLatin1Char('v')) || tag.startsWith(QLatin1Char('V'))) {
+        tag.remove(0, 1);
+    }
+    return tag;
+}
+
+ReleaseInfo parseRelease(const QJsonObject &release)
+{
+    ReleaseInfo info;
+
+    QString tag = release.value(QStringLiteral("tag_name")).toString();
+    if (tag.isEmpty()) {
+        tag = release.value(QStringLiteral("version")).toString();
+    }
+
+    info.version = normalizedVersion(tag);
+    info.parsedVersion = QVersionNumber::fromString(info.version);
+    info.notes = release.value(QStringLiteral("body")).toString();
+    if (info.notes.isEmpty()) {
+        info.notes = release.value(QStringLiteral("notes")).toString();
+    }
+
+    const QJsonArray assets = release.value(QStringLiteral("assets")).toArray();
+    for (const QJsonValue &value : assets) {
+        const QJsonObject asset = value.toObject();
+        const QString name = asset.value(QStringLiteral("name")).toString();
+        QString url = asset.value(QStringLiteral("browser_download_url")).toString();
+        if (url.isEmpty()) {
+            url = asset.value(QStringLiteral("url")).toString();
+        }
+
+        if (url.isEmpty()) {
+            continue;
+        }
+
+        if (info.zipUrl.isEmpty() && name.endsWith(QLatin1String(".zip"), Qt::CaseInsensitive)) {
+            info.zipUrl = QUrl(url);
+        } else if (info.checksumUrl.isEmpty()
+                   && (name == QLatin1String("SHA256SUMS.txt")
+                       || name.endsWith(QLatin1String(".sha256"), Qt::CaseInsensitive))) {
+            info.checksumUrl = QUrl(url);
+        }
+    }
+
+    return info;
+}
 
 QUrl resolveFeedUrl()
 {
@@ -35,15 +100,6 @@ QUrl resolveFeedUrl()
     }
 
     return QUrl(QString::fromLatin1(productionFeed));
-}
-
-QString normalizedVersion(QString tag)
-{
-    tag = tag.trimmed();
-    if (tag.startsWith(QLatin1Char('v')) || tag.startsWith(QLatin1Char('V'))) {
-        tag.remove(0, 1);
-    }
-    return tag;
 }
 
 QString checksumFor(const QString &checksumText, const QString &fileName)
@@ -287,63 +343,56 @@ void UpdateService::handleReleaseFeed(const QByteArray &data,
 
     QJsonParseError parseError{};
     const QJsonDocument document = QJsonDocument::fromJson(data, &parseError);
-    if (parseError.error != QJsonParseError::NoError || !document.isObject()) {
+    if (parseError.error != QJsonParseError::NoError) {
         fail(tr("The update feed could not be read."));
         return;
     }
 
-    const QJsonObject release = document.object();
-    QString tag = release.value(QStringLiteral("tag_name")).toString();
-    if (tag.isEmpty()) {
-        tag = release.value(QStringLiteral("version")).toString();
-    }
-
-    const QString version = normalizedVersion(tag);
-    const QVersionNumber latest = QVersionNumber::fromString(version);
-    const QVersionNumber current = QVersionNumber::fromString(m_currentVersion);
-    if (latest.isNull() || current.isNull()) {
-        fail(tr("The update feed contains an invalid version."));
+    // GitHub returns an array for the releases list. A single object is still
+    // accepted so local test feeds stay easy to write.
+    QVector<QJsonObject> releases;
+    if (document.isArray()) {
+        for (const QJsonValue &value : document.array()) {
+            if (value.isObject()) {
+                releases.append(value.toObject());
+            }
+        }
+    } else if (document.isObject()) {
+        releases.append(document.object());
+    } else {
+        fail(tr("The update feed could not be read."));
         return;
     }
 
-    m_latestVersion = version;
-    m_releaseNotes = release.value(QStringLiteral("body")).toString();
-    if (m_releaseNotes.isEmpty()) {
-        m_releaseNotes = release.value(QStringLiteral("notes")).toString();
-    }
-
-    QUrl zipUrl;
-    QUrl checksumUrl;
-    const QJsonArray assets = release.value(QStringLiteral("assets")).toArray();
-    for (const QJsonValue &value : assets) {
-        const QJsonObject asset = value.toObject();
-        const QString name = asset.value(QStringLiteral("name")).toString();
-        QString url = asset.value(QStringLiteral("browser_download_url")).toString();
-        if (url.isEmpty()) {
-            url = asset.value(QStringLiteral("url")).toString();
-        }
-
-        if (url.isEmpty()) {
+    ReleaseInfo selected;
+    for (const QJsonObject &release : releases) {
+        const ReleaseInfo info = parseRelease(release);
+        if (!info.isValid()) {
             continue;
         }
 
-        if (zipUrl.isEmpty() && name.endsWith(QLatin1String(".zip"), Qt::CaseInsensitive)) {
-            zipUrl = QUrl(url);
-        } else if (checksumUrl.isEmpty()
-                   && (name == QLatin1String("SHA256SUMS.txt")
-                       || name.endsWith(QLatin1String(".sha256"), Qt::CaseInsensitive))) {
-            checksumUrl = QUrl(url);
+        if (!selected.isValid() || info.parsedVersion > selected.parsedVersion) {
+            selected = info;
         }
     }
 
-    if (zipUrl.isEmpty() || checksumUrl.isEmpty()) {
-        fail(tr("The release does not provide a ZIP archive and checksum."));
+    if (!selected.isValid()) {
+        m_busy = false;
+        m_available = false;
+        setStatus(tr("No updates have been published yet."));
+        emit stateChanged();
+        return;
+    }
+
+    const QVersionNumber current = QVersionNumber::fromString(m_currentVersion);
+    if (current.isNull()) {
+        fail(tr("The update feed contains an invalid version."));
         return;
     }
 
     m_busy = false;
 
-    if (latest <= current) {
+    if (selected.parsedVersion <= current) {
         m_available = false;
         m_zipUrl.clear();
         m_checksumUrl.clear();
@@ -355,13 +404,15 @@ void UpdateService::handleReleaseFeed(const QByteArray &data,
         return;
     }
 
+    m_latestVersion = selected.version;
+    m_releaseNotes = selected.notes;
     m_available = true;
-    m_zipUrl = zipUrl;
-    m_checksumUrl = checksumUrl;
+    m_zipUrl = selected.zipUrl;
+    m_checksumUrl = selected.checksumUrl;
     m_progress = 0;
-    setStatus(tr("Update available: %1").arg(QStringLiteral("v") + version));
+    setStatus(tr("Update available: %1").arg(QStringLiteral("v") + selected.version));
     Logger::info(QStringLiteral("Update available: %1 -> %2")
-                     .arg(m_currentVersion, version));
+                     .arg(m_currentVersion, selected.version));
     emit updateFound(automatic);
     emit stateChanged();
 }

@@ -71,7 +71,7 @@ Home section headers and category names are produced in C++. They are rebuilt af
 
 1. Update the version in `project(DesktopHub VERSION ...)`.
 2. Run `scripts/package.ps1`.
-3. Create a GitHub Release with tag `v<version>`.
+3. Create a GitHub Release with tag `v<version>` (a prerelease is fine during the beta).
 4. Upload `dist/DesktopHub-<version>-win64.zip` and `dist/SHA256SUMS.txt`.
 5. Verify the update on a machine that has the previous version installed.
 6. Keep the release notes short; they are shown in the update dialog.

@@ -723,10 +723,6 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The release does not provide a ZIP archive and checksum.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You are using the latest version (%1).</source>
         <translation type="unfinished"></translation>
     </message>

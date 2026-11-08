@@ -98,8 +98,10 @@ requires a data migration.
 
 ## Updates
 
-- The update feed is the latest GitHub Release:
-  `https://api.github.com/repos/Valcyle/DesktopHub/releases/latest`
+- The update feed is the release list:
+  `https://api.github.com/repos/Valcyle/DesktopHub/releases?per_page=20`
+- During the beta, prereleases are included and the highest version wins. A
+  stable/beta channel selector will be added before 1.0.
 - Publish `DesktopHub-<version>-win64.zip` and `SHA256SUMS.txt` as release assets.
 - Startup checks are enabled by default and can be disabled in Settings. Manual
   checks are available at any time.
@@ -156,6 +158,7 @@ Automated tests are not set up yet; the current verification is manual.
 - [Third-party licenses](docs/third-party-licenses.md) — dependencies and license obligations
 - [Qt license notices](third_party/qt/NOTICE.md) — Qt-only LGPLv3 notices
 - [Manual test checklist](docs/testing.md) — release verification steps
+- [Changelog](CHANGELOG.md) — release history
 
 ## Privacy
 

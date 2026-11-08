@@ -1,771 +1,767 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ja_JP">
-  <context>
+<context>
     <name>AppController</name>
     <message>
-      <source>Could not open link</source>
-      <translation>リンクを開けません</translation>
+        <source>Could not open link</source>
+        <translation>リンクを開けません</translation>
     </message>
     <message>
-      <source>The link could not be opened in your browser:
+        <source>The link could not be opened in your browser:
 %1</source>
-      <translation>ブラウザでリンクを開けませんでした:
+        <translation>ブラウザでリンクを開けませんでした:
 %1</translation>
     </message>
     <message>
-      <source>Item not found</source>
-      <translation>項目が見つかりません</translation>
+        <source>Item not found</source>
+        <translation>項目が見つかりません</translation>
     </message>
     <message>
-      <source>The file or folder could not be found:
+        <source>The file or folder could not be found:
 %1
 
 Edit the item and register it again.</source>
-      <translation>ファイルまたはフォルダが見つかりません:
+        <translation>ファイルまたはフォルダが見つかりません:
 %1
 
 項目を編集して登録し直してください。</translation>
     </message>
     <message>
-      <source>Could not open item</source>
-      <translation>項目を開けません</translation>
+        <source>Could not open item</source>
+        <translation>項目を開けません</translation>
     </message>
     <message>
-      <source>The item could not be opened:
+        <source>The item could not be opened:
 %1</source>
-      <translation>項目を開けませんでした:
+        <translation>項目を開けませんでした:
 %1</translation>
     </message>
     <message>
-      <source>Changes are not saved</source>
-      <translation>変更は保存されません</translation>
+        <source>Changes are not saved</source>
+        <translation>変更は保存されません</translation>
     </message>
     <message>
-      <source>This session is read-only because the data file could not be prepared.</source>
-      <translation>データファイルを準備できなかったため、このセッションは読み取り専用です。</translation>
+        <source>This session is read-only because the data file could not be prepared.</source>
+        <translation>データファイルを準備できなかったため、このセッションは読み取り専用です。</translation>
     </message>
     <message>
-      <source>Could not save data</source>
-      <translation>データを保存できません</translation>
+        <source>Could not save data</source>
+        <translation>データを保存できません</translation>
     </message>
     <message numerus="yes">
-      <source>%n item(s) could not be found. Edit them from Apps and register them again.</source>
-      <translation>
-        <numerusform>%n 件の項目が見つかりません。アプリ画面から編集して登録し直してください。</numerusform>
-      </translation>
+        <source>%n item(s) could not be found. Edit them from Apps and register them again.</source>
+        <translation>
+            <numerusform>%n 件の項目が見つかりません。アプリ画面から編集して登録し直してください。</numerusform>
+        </translation>
     </message>
     <message>
-      <source>... and %1 more</source>
-      <translation>…ほか %1 件</translation>
+        <source>... and %1 more</source>
+        <translation>…ほか %1 件</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>AppsPage</name>
     <message>
-      <source>Apps</source>
-      <translation>アプリ</translation>
+        <source>Apps</source>
+        <translation>アプリ</translation>
     </message>
     <message>
-      <source>No items registered yet.</source>
-      <translation>まだ項目が登録されていません。</translation>
+        <source>No items registered yet.</source>
+        <translation>まだ項目が登録されていません。</translation>
     </message>
     <message numerus="yes">
-      <source>%n item(s)</source>
-      <translation>
-        <numerusform>%n 件</numerusform>
-      </translation>
+        <source>%n item(s)</source>
+        <translation>
+            <numerusform>%n 件</numerusform>
+        </translation>
     </message>
     <message>
-      <source>Read-only mode: changes are not saved.</source>
-      <translation>読み取り専用モード: 変更は保存されません。</translation>
+        <source>Read-only mode: changes are not saved.</source>
+        <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
-      <source>Add item</source>
-      <translation>項目を追加</translation>
+        <source>Add item</source>
+        <translation>項目を追加</translation>
     </message>
     <message>
-      <source>All categories</source>
-      <translation>すべてのカテゴリ</translation>
+        <source>All categories</source>
+        <translation>すべてのカテゴリ</translation>
     </message>
     <message>
-      <source>Uncategorized</source>
-      <translation>未分類</translation>
+        <source>Uncategorized</source>
+        <translation>未分類</translation>
     </message>
     <message>
-      <source>Favorite</source>
-      <translation>お気に入り</translation>
+        <source>Favorite</source>
+        <translation>お気に入り</translation>
     </message>
     <message>
-      <source>Edit</source>
-      <translation>編集</translation>
+        <source>Edit</source>
+        <translation>編集</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation>削除</translation>
+        <source>Delete</source>
+        <translation>削除</translation>
     </message>
     <message>
-      <source>No matching items</source>
-      <translation>該当する項目がありません</translation>
+        <source>No matching items</source>
+        <translation>該当する項目がありません</translation>
     </message>
     <message>
-      <source>Add an application, folder, or website to get started.</source>
-      <translation>アプリ、フォルダ、Webサイトを追加して始めましょう。</translation>
+        <source>Add an application, folder, or website to get started.</source>
+        <translation>アプリ、フォルダ、Webサイトを追加して始めましょう。</translation>
     </message>
     <message>
-      <source>Try a different search or category filter.</source>
-      <translation>検索語またはカテゴリを変えてください。</translation>
+        <source>Try a different search or category filter.</source>
+        <translation>検索語またはカテゴリを変えてください。</translation>
     </message>
     <message>
-      <source>Delete registration</source>
-      <translation>登録を削除</translation>
+        <source>Delete registration</source>
+        <translation>登録を削除</translation>
     </message>
     <message>
-      <source>Delete "%1"? The original file will not be deleted.</source>
-      <translation>「%1」を削除しますか？元のファイルは削除されません。</translation>
+        <source>Delete &quot;%1&quot;? The original file will not be deleted.</source>
+        <translation>「%1」を削除しますか？元のファイルは削除されません。</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation>キャンセル</translation>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
     </message>
     <message>
-      <source>No items yet</source>
-      <translation>まだ項目がありません</translation>
+        <source>No items yet</source>
+        <translation>まだ項目がありません</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>CategoryDialog</name>
     <message>
-      <source>Rename category</source>
-      <translation>カテゴリ名を変更</translation>
+        <source>Rename category</source>
+        <translation>カテゴリ名を変更</translation>
     </message>
     <message>
-      <source>Add category</source>
-      <translation>カテゴリを追加</translation>
+        <source>Add category</source>
+        <translation>カテゴリを追加</translation>
     </message>
     <message>
-      <source>Category name</source>
-      <translation>カテゴリ名</translation>
+        <source>Category name</source>
+        <translation>カテゴリ名</translation>
     </message>
     <message>
-      <source>1 to 50 characters</source>
-      <translation>1～50文字</translation>
+        <source>1 to 50 characters</source>
+        <translation>1～50文字</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation>キャンセル</translation>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
     </message>
     <message>
-      <source>Save</source>
-      <translation>保存</translation>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>CategoryModel</name>
     <message>
-      <source>The category no longer exists.</source>
-      <translation>カテゴリは既に存在しません。</translation>
+        <source>The category no longer exists.</source>
+        <translation>カテゴリは既に存在しません。</translation>
     </message>
     <message>
-      <source>Category name must be 1 to 50 characters.</source>
-      <translation>カテゴリ名は1～50文字で入力してください。</translation>
+        <source>Category name must be 1 to 50 characters.</source>
+        <translation>カテゴリ名は1～50文字で入力してください。</translation>
     </message>
     <message>
-      <source>A category with this name already exists.</source>
-      <translation>同じ名前のカテゴリが既に存在します。</translation>
+        <source>A category with this name already exists.</source>
+        <translation>同じ名前のカテゴリが既に存在します。</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>HomeModel</name>
     <message>
-      <source>Favorites</source>
-      <translation>お気に入り</translation>
+        <source>Favorites</source>
+        <translation>お気に入り</translation>
     </message>
     <message>
-      <source>Uncategorized</source>
-      <translation>未分類</translation>
+        <source>Uncategorized</source>
+        <translation>未分類</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>HomePage</name>
     <message>
-      <source>Home</source>
-      <translation>ホーム</translation>
+        <source>Home</source>
+        <translation>ホーム</translation>
     </message>
     <message numerus="yes">
-      <source>%n item(s)</source>
-      <translation>
-        <numerusform>%n 件</numerusform>
-      </translation>
+        <source>%n item(s)</source>
+        <translation>
+            <numerusform>%n 件</numerusform>
+        </translation>
     </message>
     <message>
-      <source>Read-only mode: changes are not saved.</source>
-      <translation>読み取り専用モード: 変更は保存されません。</translation>
+        <source>Read-only mode: changes are not saved.</source>
+        <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
-      <source>Favorite</source>
-      <translation>お気に入り</translation>
+        <source>Favorite</source>
+        <translation>お気に入り</translation>
     </message>
     <message>
-      <source>No items yet</source>
-      <translation>まだ項目がありません</translation>
+        <source>No items yet</source>
+        <translation>まだ項目がありません</translation>
     </message>
     <message>
-      <source>No matching items</source>
-      <translation>該当する項目がありません</translation>
+        <source>No matching items</source>
+        <translation>該当する項目がありません</translation>
     </message>
     <message>
-      <source>Apps, folders, and websites you add will appear here.</source>
-      <translation>追加したアプリ、フォルダ、Webサイトがここに表示されます。</translation>
+        <source>Apps, folders, and websites you add will appear here.</source>
+        <translation>追加したアプリ、フォルダ、Webサイトがここに表示されます。</translation>
     </message>
     <message>
-      <source>Try a different search.</source>
-      <translation>検索語を変えてください。</translation>
+        <source>Try a different search.</source>
+        <translation>検索語を変えてください。</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>HubSearchField</name>
     <message>
-      <source>Search</source>
-      <translation>検索</translation>
+        <source>Search</source>
+        <translation>検索</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ItemDialog</name>
     <message>
-      <source>Edit item</source>
-      <translation>項目を編集</translation>
+        <source>Edit item</source>
+        <translation>項目を編集</translation>
     </message>
     <message>
-      <source>Add item</source>
-      <translation>項目を追加</translation>
+        <source>Add item</source>
+        <translation>項目を追加</translation>
     </message>
     <message>
-      <source>Name must be 1 to 100 characters.</source>
-      <translation>名前は1～100文字で入力してください。</translation>
+        <source>Name must be 1 to 100 characters.</source>
+        <translation>名前は1～100文字で入力してください。</translation>
     </message>
     <message>
-      <source>Select a target first.</source>
-      <translation>先に対象を選択してください。</translation>
+        <source>Select a target first.</source>
+        <translation>先に対象を選択してください。</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation>種類</translation>
+        <source>Type</source>
+        <translation>種類</translation>
     </message>
     <message>
-      <source>Application</source>
-      <translation>アプリ</translation>
+        <source>Application</source>
+        <translation>アプリ</translation>
     </message>
     <message>
-      <source>Folder</source>
-      <translation>フォルダ</translation>
+        <source>Folder</source>
+        <translation>フォルダ</translation>
     </message>
     <message>
-      <source>Web URL</source>
-      <translation>Web URL</translation>
+        <source>Web URL</source>
+        <translation>Web URL</translation>
     </message>
     <message>
-      <source>Target</source>
-      <translation>対象</translation>
+        <source>Target</source>
+        <translation>対象</translation>
     </message>
     <message>
-      <source>https://example.com</source>
-      <translation>https://example.com</translation>
+        <source>https://example.com</source>
+        <translation>https://example.com</translation>
     </message>
     <message>
-      <source>Choose a file or folder</source>
-      <translation>ファイルまたはフォルダを選択</translation>
+        <source>Choose a file or folder</source>
+        <translation>ファイルまたはフォルダを選択</translation>
     </message>
     <message>
-      <source>Browse…</source>
-      <translation>参照…</translation>
+        <source>Browse…</source>
+        <translation>参照…</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation>名前</translation>
+        <source>Name</source>
+        <translation>名前</translation>
     </message>
     <message>
-      <source>Category</source>
-      <translation>カテゴリ</translation>
+        <source>Category</source>
+        <translation>カテゴリ</translation>
     </message>
     <message>
-      <source>Uncategorized</source>
-      <translation>未分類</translation>
+        <source>Uncategorized</source>
+        <translation>未分類</translation>
     </message>
     <message>
-      <source>Add to favorites</source>
-      <translation>お気に入りに追加</translation>
+        <source>Add to favorites</source>
+        <translation>お気に入りに追加</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation>キャンセル</translation>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
     </message>
     <message>
-      <source>Save</source>
-      <translation>保存</translation>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
     <message>
-      <source>Select an application</source>
-      <translation>アプリを選択</translation>
+        <source>Select an application</source>
+        <translation>アプリを選択</translation>
     </message>
     <message>
-      <source>Applications (*.exe *.lnk)</source>
-      <translation>アプリケーション (*.exe *.lnk)</translation>
+        <source>Applications (*.exe *.lnk)</source>
+        <translation>アプリケーション (*.exe *.lnk)</translation>
     </message>
     <message>
-      <source>All files (*)</source>
-      <translation>すべてのファイル (*)</translation>
+        <source>All files (*)</source>
+        <translation>すべてのファイル (*)</translation>
     </message>
     <message>
-      <source>Select a folder</source>
-      <translation>フォルダを選択</translation>
+        <source>Select a folder</source>
+        <translation>フォルダを選択</translation>
     </message>
     <message>
-      <source>Already registered</source>
-      <translation>登録済みです</translation>
+        <source>Already registered</source>
+        <translation>登録済みです</translation>
     </message>
     <message>
-      <source>This target is already registered. Register it again?</source>
-      <translation>この対象は既に登録されています。もう一度登録しますか？</translation>
+        <source>This target is already registered. Register it again?</source>
+        <translation>この対象は既に登録されています。もう一度登録しますか？</translation>
     </message>
     <message>
-      <source>Register anyway</source>
-      <translation>登録する</translation>
+        <source>Register anyway</source>
+        <translation>登録する</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ItemModel</name>
     <message>
-      <source>The item no longer exists.</source>
-      <translation>項目は既に存在しません。</translation>
+        <source>The item no longer exists.</source>
+        <translation>項目は既に存在しません。</translation>
     </message>
     <message>
-      <source>Name must be 1 to 100 characters.</source>
-      <translation>名前は1～100文字で入力してください。</translation>
+        <source>Name must be 1 to 100 characters.</source>
+        <translation>名前は1～100文字で入力してください。</translation>
     </message>
     <message>
-      <source>Unsupported item type.</source>
-      <translation>サポートされていない種類です。</translation>
+        <source>Unsupported item type.</source>
+        <translation>サポートされていない種類です。</translation>
     </message>
     <message>
-      <source>Enter a valid http or https URL.</source>
-      <translation>有効な http または https の URL を入力してください。</translation>
+        <source>Enter a valid http or https URL.</source>
+        <translation>有効な http または https の URL を入力してください。</translation>
     </message>
     <message>
-      <source>Select a file or folder with an absolute path.</source>
-      <translation>絶対パスのファイルまたはフォルダを選択してください。</translation>
+        <source>Select a file or folder with an absolute path.</source>
+        <translation>絶対パスのファイルまたはフォルダを選択してください。</translation>
     </message>
     <message>
-      <source>The selected file or folder does not exist.</source>
-      <translation>選択したファイルまたはフォルダが存在しません。</translation>
+        <source>The selected file or folder does not exist.</source>
+        <translation>選択したファイルまたはフォルダが存在しません。</translation>
     </message>
     <message>
-      <source>Select an existing folder.</source>
-      <translation>存在するフォルダを選択してください。</translation>
+        <source>Select an existing folder.</source>
+        <translation>存在するフォルダを選択してください。</translation>
     </message>
     <message>
-      <source>Select an existing file.</source>
-      <translation>存在するファイルを選択してください。</translation>
+        <source>Select an existing file.</source>
+        <translation>存在するファイルを選択してください。</translation>
     </message>
     <message>
-      <source>Select an existing .exe file.</source>
-      <translation>存在する .exe ファイルを選択してください。</translation>
+        <source>Select an existing .exe file.</source>
+        <translation>存在する .exe ファイルを選択してください。</translation>
     </message>
     <message>
-      <source>Select an existing .lnk shortcut.</source>
-      <translation>存在する .lnk ショートカットを選択してください。</translation>
+        <source>Select an existing .lnk shortcut.</source>
+        <translation>存在する .lnk ショートカットを選択してください。</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>JsonStorage</name>
     <message>
-      <source>The data file could not be opened: %1</source>
-      <translation>データファイルを開けませんでした: %1</translation>
+        <source>The data file could not be opened: %1</source>
+        <translation>データファイルを開けませんでした: %1</translation>
     </message>
     <message>
-      <source>The data file was corrupt. It was moved to:
+        <source>The data file was corrupt. It was moved to:
 %1
 
 An empty dashboard has been started.</source>
-      <translation>データファイルが壊れていたため、次の場所に移動しました:
+        <translation>データファイルが壊れていたため、次の場所に移動しました:
 %1
 
 空のダッシュボードで起動しました。</translation>
     </message>
     <message>
-      <source>The data file was corrupt and could not be moved aside. Changes will not be saved in this session.</source>
-      <translation>データファイルが壊れており、移動できませんでした。このセッションでは変更は保存されません。</translation>
+        <source>The data file was corrupt and could not be moved aside. Changes will not be saved in this session.</source>
+        <translation>データファイルが壊れており、移動できませんでした。このセッションでは変更は保存されません。</translation>
     </message>
     <message>
-      <source>The data file does not contain a valid schema version. Changes will not be saved in this session.</source>
-      <translation>データファイルに有効なスキーマバージョンがありません。このセッションでは変更は保存されません。</translation>
+        <source>The data file does not contain a valid schema version. Changes will not be saved in this session.</source>
+        <translation>データファイルに有効なスキーマバージョンがありません。このセッションでは変更は保存されません。</translation>
     </message>
     <message>
-      <source>This data file was created by a newer version of Desktop Hub. Update the application before opening it.</source>
-      <translation>このデータファイルは新しいバージョンの Desktop Hub で作成されています。アプリを更新してから開いてください。</translation>
+        <source>This data file was created by a newer version of Desktop Hub. Update the application before opening it.</source>
+        <translation>このデータファイルは新しいバージョンの Desktop Hub で作成されています。アプリを更新してから開いてください。</translation>
     </message>
     <message>
-      <source>This data file uses an unsupported schema version.</source>
-      <translation>このデータファイルはサポートされていないスキーマバージョンです。</translation>
+        <source>This data file uses an unsupported schema version.</source>
+        <translation>このデータファイルはサポートされていないスキーマバージョンです。</translation>
     </message>
     <message>
-      <source>%1 item(s) could not be loaded and were skipped.</source>
-      <translation>%1 件の項目を読み込めなかったためスキップしました。</translation>
+        <source>%1 item(s) could not be loaded and were skipped.</source>
+        <translation>%1 件の項目を読み込めなかったためスキップしました。</translation>
     </message>
     <message>
-      <source>%1 category(ies) could not be loaded and were skipped.</source>
-      <translation>%1 件のカテゴリを読み込めなかったためスキップしました。</translation>
+        <source>%1 category(ies) could not be loaded and were skipped.</source>
+        <translation>%1 件のカテゴリを読み込めなかったためスキップしました。</translation>
     </message>
     <message>
-      <source>%1 item(s) referenced a missing category and were treated as uncategorized.</source>
-      <translation>%1 件の項目が存在しないカテゴリを参照していたため、未分類として扱いました。</translation>
+        <source>%1 item(s) referenced a missing category and were treated as uncategorized.</source>
+        <translation>%1 件の項目が存在しないカテゴリを参照していたため、未分類として扱いました。</translation>
     </message>
     <message>
-      <source>The data directory could not be created:
+        <source>The data directory could not be created:
 %1</source>
-      <translation>データフォルダを作成できませんでした:
+        <translation>データフォルダを作成できませんでした:
 %1</translation>
     </message>
     <message>
-      <source>The data file could not be opened for writing:
+        <source>The data file could not be opened for writing:
 %1</source>
-      <translation>データファイルを書き込み用に開けませんでした:
+        <translation>データファイルを書き込み用に開けませんでした:
 %1</translation>
     </message>
     <message>
-      <source>The data file could not be written:
+        <source>The data file could not be written:
 %1</source>
-      <translation>データファイルを書き込めませんでした:
+        <translation>データファイルを書き込めませんでした:
 %1</translation>
     </message>
     <message>
-      <source>The data file could not be saved:
+        <source>The data file could not be saved:
 %1</source>
-      <translation>データファイルを保存できませんでした:
+        <translation>データファイルを保存できませんでした:
 %1</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Main</name>
     <message>
-      <source>Desktop Hub</source>
-      <translation>Desktop Hub</translation>
+        <source>Desktop Hub</source>
+        <translation>Desktop Hub</translation>
     </message>
     <message>
-      <source>Update failed</source>
-      <translation>更新に失敗しました</translation>
+        <source>Update failed</source>
+        <translation>更新に失敗しました</translation>
     </message>
     <message>
-      <source>Notice</source>
-      <translation>お知らせ</translation>
+        <source>Notice</source>
+        <translation>お知らせ</translation>
     </message>
     <message>
-      <source>Retry</source>
-      <translation>再試行</translation>
+        <source>Retry</source>
+        <translation>再試行</translation>
     </message>
     <message>
-      <source>Close</source>
-      <translation>閉じる</translation>
+        <source>Close</source>
+        <translation>閉じる</translation>
     </message>
     <message>
-      <source>Unsaved changes</source>
-      <translation>未保存の変更</translation>
+        <source>Unsaved changes</source>
+        <translation>未保存の変更</translation>
     </message>
     <message>
-      <source>Changes could not be saved. Quit without saving them?</source>
-      <translation>変更を保存できませんでした。保存せずに終了しますか？</translation>
+        <source>Changes could not be saved. Quit without saving them?</source>
+        <translation>変更を保存できませんでした。保存せずに終了しますか？</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation>キャンセル</translation>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
     </message>
     <message>
-      <source>Quit</source>
-      <translation>終了</translation>
+        <source>Quit</source>
+        <translation>終了</translation>
     </message>
     <message>
-      <source>Update available</source>
-      <translation>アップデートがあります</translation>
+        <source>Update available</source>
+        <translation>アップデートがあります</translation>
     </message>
     <message>
-      <source>Desktop Hub %1 is available. You are using %2.</source>
-      <translation>Desktop Hub %1 が利用可能です。現在のバージョンは %2 です。</translation>
+        <source>Desktop Hub %1 is available. You are using %2.</source>
+        <translation>Desktop Hub %1 が利用可能です。現在のバージョンは %2 です。</translation>
     </message>
     <message>
-      <source>Release notes</source>
-      <translation>リリースノート</translation>
+        <source>Release notes</source>
+        <translation>リリースノート</translation>
     </message>
     <message>
-      <source>Later</source>
-      <translation>あとで</translation>
+        <source>Later</source>
+        <translation>あとで</translation>
     </message>
     <message>
-      <source>Install now</source>
-      <translation>今すぐインストール</translation>
+        <source>Install now</source>
+        <translation>今すぐインストール</translation>
     </message>
     <message>
-      <source>Data notice</source>
-      <translation>データのお知らせ</translation>
+        <source>Data notice</source>
+        <translation>データのお知らせ</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
-      <source>Settings</source>
-      <translation>設定</translation>
+        <source>Settings</source>
+        <translation>設定</translation>
     </message>
     <message>
-      <source>Read-only mode: changes are not saved.</source>
-      <translation>読み取り専用モード: 変更は保存されません。</translation>
+        <source>Read-only mode: changes are not saved.</source>
+        <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
-      <source>General</source>
-      <translation>一般</translation>
+        <source>General</source>
+        <translation>一般</translation>
     </message>
     <message>
-      <source>Language</source>
-      <translation>言語</translation>
+        <source>Language</source>
+        <translation>言語</translation>
     </message>
     <message>
-      <source>Changes apply immediately.</source>
-      <translation>変更はすぐに反映されます。</translation>
+        <source>Changes apply immediately.</source>
+        <translation>変更はすぐに反映されます。</translation>
     </message>
     <message>
-      <source>English</source>
-      <translation>英語</translation>
+        <source>English</source>
+        <translation>英語</translation>
     </message>
     <message>
-      <source>Japanese</source>
-      <translation>日本語</translation>
+        <source>Japanese</source>
+        <translation>日本語</translation>
     </message>
     <message>
-      <source>Theme</source>
-      <translation>テーマ</translation>
+        <source>Theme</source>
+        <translation>テーマ</translation>
     </message>
     <message>
-      <source>Dark is the only theme in this version.</source>
-      <translation>このバージョンではダークテーマのみ利用できます。</translation>
+        <source>Dark is the only theme in this version.</source>
+        <translation>このバージョンではダークテーマのみ利用できます。</translation>
     </message>
     <message>
-      <source>Dark</source>
-      <translation>ダーク</translation>
+        <source>Dark</source>
+        <translation>ダーク</translation>
     </message>
     <message>
-      <source>Categories</source>
-      <translation>カテゴリ</translation>
+        <source>Categories</source>
+        <translation>カテゴリ</translation>
     </message>
     <message>
-      <source>Assign categories when editing an item.</source>
-      <translation>項目の編集時にカテゴリを設定できます。</translation>
+        <source>Assign categories when editing an item.</source>
+        <translation>項目の編集時にカテゴリを設定できます。</translation>
     </message>
     <message>
-      <source>Add category</source>
-      <translation>カテゴリを追加</translation>
+        <source>Add category</source>
+        <translation>カテゴリを追加</translation>
     </message>
     <message>
-      <source>No categories yet.</source>
-      <translation>まだカテゴリがありません。</translation>
+        <source>No categories yet.</source>
+        <translation>まだカテゴリがありません。</translation>
     </message>
     <message>
-      <source>Rename</source>
-      <translation>名前を変更</translation>
+        <source>Rename</source>
+        <translation>名前を変更</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation>削除</translation>
+        <source>Delete</source>
+        <translation>削除</translation>
     </message>
     <message>
-      <source>Data</source>
-      <translation>データ</translation>
+        <source>Data</source>
+        <translation>データ</translation>
     </message>
     <message>
-      <source>Storage location</source>
-      <translation>保存先</translation>
+        <source>Storage location</source>
+        <translation>保存先</translation>
     </message>
     <message>
-      <source>Logs and application data stay on this device.</source>
-      <translation>ログとアプリのデータはこのデバイス内にのみ保存されます。</translation>
+        <source>Logs and application data stay on this device.</source>
+        <translation>ログとアプリのデータはこのデバイス内にのみ保存されます。</translation>
     </message>
     <message>
-      <source>Updates</source>
-      <translation>アップデート</translation>
+        <source>Updates</source>
+        <translation>アップデート</translation>
     </message>
     <message>
-      <source>Current version: %1</source>
-      <translation>現在のバージョン: %1</translation>
+        <source>Current version: %1</source>
+        <translation>現在のバージョン: %1</translation>
     </message>
     <message>
-      <source>Check for updates automatically on startup</source>
-      <translation>起動時に自動でアップデートを確認</translation>
+        <source>Check for updates automatically on startup</source>
+        <translation>起動時に自動でアップデートを確認</translation>
     </message>
     <message>
-      <source>Check for updates</source>
-      <translation>アップデートを確認</translation>
+        <source>Check for updates</source>
+        <translation>アップデートを確認</translation>
     </message>
     <message>
-      <source>Download and install</source>
-      <translation>ダウンロードしてインストール</translation>
+        <source>Download and install</source>
+        <translation>ダウンロードしてインストール</translation>
     </message>
     <message>
-      <source>Release notes</source>
-      <translation>リリースノート</translation>
+        <source>Release notes</source>
+        <translation>リリースノート</translation>
     </message>
     <message>
-      <source>Update checks contact GitHub only when enabled or requested. No personal data is sent.</source>
-      <translation>アップデート確認は有効時または手動実行時のみ GitHub に接続します。個人情報は送信しません。</translation>
+        <source>Update checks contact GitHub only when enabled or requested. No personal data is sent.</source>
+        <translation>アップデート確認は有効時または手動実行時のみ GitHub に接続します。個人情報は送信しません。</translation>
     </message>
     <message>
-      <source>Version</source>
-      <translation>バージョン</translation>
+        <source>Version</source>
+        <translation>バージョン</translation>
     </message>
     <message>
-      <source>Delete category</source>
-      <translation>カテゴリを削除</translation>
+        <source>Delete category</source>
+        <translation>カテゴリを削除</translation>
     </message>
     <message>
-      <source>Delete category "%1"? Items in it will become uncategorized.</source>
-      <translation>「%1」を削除しますか？このカテゴリの項目は未分類になります。</translation>
+        <source>Delete category &quot;%1&quot;? Items in it will become uncategorized.</source>
+        <translation>「%1」を削除しますか？このカテゴリの項目は未分類になります。</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation>キャンセル</translation>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
     </message>
     <message>
-      <source>Install update</source>
-      <translation>アップデートをインストール</translation>
+        <source>Install update</source>
+        <translation>アップデートをインストール</translation>
     </message>
     <message>
-      <source>Desktop Hub will close and restart to install version %1.</source>
-      <translation>バージョン %1 をインストールするため、Desktop Hub を終了して再起動します。</translation>
+        <source>Desktop Hub will close and restart to install version %1.</source>
+        <translation>バージョン %1 をインストールするため、Desktop Hub を終了して再起動します。</translation>
     </message>
     <message>
-      <source>Install</source>
-      <translation>インストール</translation>
+        <source>Install</source>
+        <translation>インストール</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Sidebar</name>
     <message>
-      <source>Desktop Hub</source>
-      <translation>Desktop Hub</translation>
+        <source>Desktop Hub</source>
+        <translation>Desktop Hub</translation>
     </message>
     <message>
-      <source>Home</source>
-      <translation>ホーム</translation>
+        <source>Home</source>
+        <translation>ホーム</translation>
     </message>
     <message>
-      <source>Apps</source>
-      <translation>アプリ</translation>
+        <source>Apps</source>
+        <translation>アプリ</translation>
     </message>
     <message>
-      <source>Settings</source>
-      <translation>設定</translation>
+        <source>Settings</source>
+        <translation>設定</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>SingleInstance</name>
     <message>
-      <source>The single-instance lock file could not be created because of a permission error.</source>
-      <translation>権限エラーのため、多重起動防止用のロックファイルを作成できませんでした。</translation>
+        <source>The single-instance lock file could not be created because of a permission error.</source>
+        <translation>権限エラーのため、多重起動防止用のロックファイルを作成できませんでした。</translation>
     </message>
     <message>
-      <source>The single-instance lock file could not be created.</source>
-      <translation>多重起動防止用のロックファイルを作成できませんでした。</translation>
+        <source>The single-instance lock file could not be created.</source>
+        <translation>多重起動防止用のロックファイルを作成できませんでした。</translation>
     </message>
     <message>
-      <source>Another instance is already running.</source>
-      <translation>既に別のインスタンスが起動しています。</translation>
+        <source>Another instance is already running.</source>
+        <translation>既に別のインスタンスが起動しています。</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>UpdateService</name>
     <message>
-      <source>Not checked yet.</source>
-      <translation>まだ確認していません。</translation>
+        <source>Not checked yet.</source>
+        <translation>まだ確認していません。</translation>
     </message>
     <message>
-      <source>Checking for updates...</source>
-      <translation>アップデートを確認しています...</translation>
+        <source>Checking for updates...</source>
+        <translation>アップデートを確認しています...</translation>
     </message>
     <message>
-      <source>Downloading update...</source>
-      <translation>アップデートをダウンロードしています...</translation>
+        <source>Downloading update...</source>
+        <translation>アップデートをダウンロードしています...</translation>
     </message>
     <message>
-      <source>Could not download the checksum: %1</source>
-      <translation>チェックサムをダウンロードできませんでした: %1</translation>
+        <source>Could not download the checksum: %1</source>
+        <translation>チェックサムをダウンロードできませんでした: %1</translation>
     </message>
     <message>
-      <source>The published checksum does not include the update archive.</source>
-      <translation>公開されたチェックサムに更新アーカイブが含まれていません。</translation>
+        <source>The published checksum does not include the update archive.</source>
+        <translation>公開されたチェックサムに更新アーカイブが含まれていません。</translation>
     </message>
     <message>
-      <source>Could not download the update: %1</source>
-      <translation>アップデートをダウンロードできませんでした: %1</translation>
+        <source>Could not download the update: %1</source>
+        <translation>アップデートをダウンロードできませんでした: %1</translation>
     </message>
     <message>
-      <source>The downloaded update failed verification.</source>
-      <translation>ダウンロードしたアップデートの検証に失敗しました。</translation>
+        <source>The downloaded update failed verification.</source>
+        <translation>ダウンロードしたアップデートの検証に失敗しました。</translation>
     </message>
     <message>
-      <source>Update available: %1</source>
-      <translation>アップデートがあります: %1</translation>
+        <source>Update available: %1</source>
+        <translation>アップデートがあります: %1</translation>
     </message>
     <message>
-      <source>Could not read %1</source>
-      <translation>%1 を読み込めませんでした</translation>
+        <source>Could not read %1</source>
+        <translation>%1 を読み込めませんでした</translation>
     </message>
     <message>
-      <source>No updates have been published yet.</source>
-      <translation>まだアップデートは公開されていません。</translation>
+        <source>No updates have been published yet.</source>
+        <translation>まだアップデートは公開されていません。</translation>
     </message>
     <message>
-      <source>Update check failed: %1</source>
-      <translation>アップデートの確認に失敗しました: %1</translation>
+        <source>Update check failed: %1</source>
+        <translation>アップデートの確認に失敗しました: %1</translation>
     </message>
     <message>
-      <source>The update feed could not be read.</source>
-      <translation>アップデート情報を読み込めませんでした。</translation>
+        <source>The update feed could not be read.</source>
+        <translation>アップデート情報を読み込めませんでした。</translation>
     </message>
     <message>
-      <source>The update feed contains an invalid version.</source>
-      <translation>アップデート情報のバージョンが不正です。</translation>
+        <source>The update feed contains an invalid version.</source>
+        <translation>アップデート情報のバージョンが不正です。</translation>
     </message>
     <message>
-      <source>The release does not provide a ZIP archive and checksum.</source>
-      <translation>リリースに ZIP アーカイブとチェックサムが含まれていません。</translation>
+        <source>You are using the latest version (%1).</source>
+        <translation>最新バージョン (%1) を使用しています。</translation>
     </message>
     <message>
-      <source>You are using the latest version (%1).</source>
-      <translation>最新バージョン (%1) を使用しています。</translation>
+        <source>The update could not be prepared in the temporary folder.</source>
+        <translation>一時フォルダにアップデートを準備できませんでした。</translation>
     </message>
     <message>
-      <source>The update could not be prepared in the temporary folder.</source>
-      <translation>一時フォルダにアップデートを準備できませんでした。</translation>
+        <source>The update archive could not be written.</source>
+        <translation>アップデートアーカイブを書き込めませんでした。</translation>
     </message>
     <message>
-      <source>The update archive could not be written.</source>
-      <translation>アップデートアーカイブを書き込めませんでした。</translation>
+        <source>The update could not be extracted.</source>
+        <translation>アップデートを展開できませんでした。</translation>
     </message>
     <message>
-      <source>The update could not be extracted.</source>
-      <translation>アップデートを展開できませんでした。</translation>
+        <source>This build cannot self-update because DesktopHubUpdater.exe is missing.</source>
+        <translation>DesktopHubUpdater.exe がないため、このビルドは自己更新できません。</translation>
     </message>
     <message>
-      <source>This build cannot self-update because DesktopHubUpdater.exe is missing.</source>
-      <translation>DesktopHubUpdater.exe がないため、このビルドは自己更新できません。</translation>
+        <source>The updater could not be started.</source>
+        <translation>アップデーターを起動できませんでした。</translation>
     </message>
     <message>
-      <source>The updater could not be started.</source>
-      <translation>アップデーターを起動できませんでした。</translation>
+        <source>Installing update... Desktop Hub will restart.</source>
+        <translation>アップデートをインストールしています... Desktop Hub は再起動します。</translation>
     </message>
     <message>
-      <source>Installing update... Desktop Hub will restart.</source>
-      <translation>アップデートをインストールしています... Desktop Hub は再起動します。</translation>
+        <source>Update failed.</source>
+        <translation>アップデートに失敗しました。</translation>
     </message>
-    <message>
-      <source>Update failed.</source>
-      <translation>アップデートに失敗しました。</translation>
-    </message>
-  </context>
+</context>
 </TS>

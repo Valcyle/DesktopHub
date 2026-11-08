@@ -190,7 +190,8 @@ Launching:
 ### 5.9 Updates
 
 - Distribution format: portable ZIP (no administrator privileges).
-- Check the latest GitHub Release over HTTPS at startup (enabled by default, can be disabled in Settings) and on demand.
+- Check the GitHub Releases list over HTTPS at startup (enabled by default, can be disabled in Settings) and on demand.
+- During the beta, prereleases are included; the highest version is offered.
 - Compare semantic versions and show the release notes.
 - Download `DesktopHub-<version>-win64.zip` and `SHA256SUMS.txt`, verify SHA-256, extract with Windows `tar.exe`, and hand replacement to `DesktopHubUpdater.exe`.
 - The updater waits for the application to exit, replaces the files, and restarts the application.

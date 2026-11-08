@@ -42,6 +42,7 @@ try {
     Copy-Item (Join-Path $buildDir "DesktopHub.exe") $stage
     Copy-Item (Join-Path $buildDir "DesktopHubUpdater.exe") $stage
     Copy-Item "README.md" $stage
+    Copy-Item "CHANGELOG.md" $stage
     Copy-Item "LICENSE" $stage
     Copy-Item "NOTICE" $stage
     Copy-Item "TRADEMARKS.md" $stage

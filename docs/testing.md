@@ -38,6 +38,7 @@ debug build and, for release checks, the packaged build.
 - [ ] Manual check reports "latest version" when the release is not newer.
 - [ ] Automatic check can be disabled in Settings and the choice persists.
 - [ ] An available update shows the release notes and the install button.
+- [ ] A prerelease is offered during the beta.
 - [ ] Install downloads the ZIP, verifies SHA-256, extracts, replaces files, and restarts.
 - [ ] A bad checksum is rejected and the app stays open.
 - [ ] A missing `DesktopHubUpdater.exe` is reported instead of partially updating.
