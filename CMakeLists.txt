@@ -11,7 +11,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml Quick)
+find_package(Qt6 6.5 REQUIRED COMPONENTS
+    Core
+    Gui
+    Qml
+    Quick
+    QuickControls2
+    LinguistTools
+)
 
 # Sets up AUTOMOC/AUTORCC and other Qt defaults shared by all targets.
 qt_standard_project_setup()
@@ -23,20 +30,34 @@ qt_policy(SET QTP0004 NEW)
 
 qt_add_executable(DesktopHub
     src/main.cpp
+    src/core/AppSettings.h
+    src/core/AppSettings.cpp
 )
 
-# Registers the QML files as a module so they can be loaded by URI
-# (see engine.loadFromModule in src/main.cpp).
+# All QML files are registered at the root of the "DesktopHub" module.
+# Keeping them flat also keeps the QML module layout rules simple.
+set(DESKTOPHUB_QML_FILES
+    src/gui/qml/Main.qml
+    src/gui/qml/Theme.qml
+    src/gui/qml/Sidebar.qml
+    src/gui/qml/HomePage.qml
+    src/gui/qml/AppsPage.qml
+    src/gui/qml/SettingsPage.qml
+)
+
+foreach(qml_file IN LISTS DESKTOPHUB_QML_FILES)
+    get_filename_component(qml_file_name "${qml_file}" NAME)
+    set_source_files_properties("${qml_file}" PROPERTIES QT_RESOURCE_ALIAS "${qml_file_name}")
+endforeach()
+
+# Theme.qml declares "pragma Singleton" and must be registered accordingly.
+set_source_files_properties(src/gui/qml/Theme.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_add_qml_module(DesktopHub
     URI DesktopHub
     VERSION 1.0
     QML_FILES
-        src/gui/qml/Main.qml
-)
-
-# Keep the QML resource path stable regardless of the source directory layout.
-set_source_files_properties(src/gui/qml/Main.qml
-    PROPERTIES QT_RESOURCE_ALIAS Main.qml
+        ${DESKTOPHUB_QML_FILES}
 )
 
 # Build a GUI application without an extra console window.
@@ -51,9 +72,24 @@ else()
     target_compile_options(DesktopHub PRIVATE -Wall -Wextra)
 endif()
 
+# "src" is used by our own includes, and "src/core" lets the generated QML type
+# registration find <AppSettings.h>.
+target_include_directories(DesktopHub PRIVATE src src/core)
+
 target_link_libraries(DesktopHub PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    Qt6::QuickControls2
+)
+
+# Compile the translation files into the executable under ":/i18n".
+# The update_translations target refreshes the .ts files with lupdate.
+qt_add_translations(DesktopHub
+    TS_FILES
+        i18n/desktophub_en.ts
+        i18n/desktophub_ja.ts
+    RESOURCE_PREFIX "/i18n"
+    LUPDATE_OPTIONS -no-obsolete -locations none
 )

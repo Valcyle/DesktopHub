@@ -40,6 +40,16 @@ The minimum supported Qt version remains 6.5, as declared in `CMakeLists.txt`.
 - C++ standard: C++17
 - Warnings: `-Wall -Wextra` (MinGW)
 
+## Translations
+
+- Tooling: `qt_add_translations` with Qt LinguistTools
+- Source language: English (`qsTr()` in QML)
+- Translation files: `i18n/desktophub_en.ts`, `i18n/desktophub_ja.ts`
+- Refresh: `cmake --build --preset mingw-debug --target update_translations`
+- Output: `.qm` files embedded under `:/i18n`
+- Default language: `QLocale::system().uiLanguages()`, so the Windows display language is used rather than the regional format alone
+- Switching: `QQmlEngine::retranslate()` applies the new language immediately
+
 ## Verification
 
 Phase 0 is complete when the following commands configure, build, and start a Qt Quick window:

@@ -52,8 +52,8 @@ Page responsibilities:
 
 - All user-facing text must go through `qsTr()`; never hard-code UI strings in QML.
 - Source strings are written in English and translated into Japanese with Qt Linguist (`.ts` files, `lupdate` / `lrelease`).
-- The default language follows the OS locale: Japanese on Japanese systems, English otherwise.
-- The language can be changed in Settings. A restart is enough to apply the change in the MVP.
+- The default language follows the OS display language: Japanese on Japanese systems, English otherwise.
+- The language can be changed in Settings. Changes apply immediately; a restart is an acceptable fallback.
 
 ### Keyboard operation
 

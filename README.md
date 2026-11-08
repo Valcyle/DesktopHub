@@ -4,7 +4,15 @@
 
 Desktop Hub is a Windows desktop dashboard that keeps the applications, folders, and websites you use every day in one place. Instead of being just another launcher, it is built around a customizable dashboard that can grow with future panels, widgets, and integrations.
 
-> Status: early development. The current milestone is Phase 0 (development environment and minimal Qt Quick window). Features described below are planned, not implemented yet.
+> Status: early development. Phase 1 (basic window, English/Japanese translation base) is complete. Item management and storage are next.
+
+## Features
+
+- Dark dashboard window with a fixed sidebar (Home, Apps, Settings)
+- English and Japanese UI, switchable from Settings without restarting
+- Responsive layout that works down to the 900 x 600 minimum size
+
+Planned for the next phases: item registration (apps, folders, URLs), search, categories, favorites, JSON persistence, Shell icons, and error handling.
 
 ## Requirements
 
@@ -34,6 +42,18 @@ You can also open the project folder directly in Qt Creator or in VS Code with t
 
 A release build is available through the `mingw-release` preset.
 
+## Translations
+
+English is the source language. Every user-facing string goes through `qsTr()`, and Japanese translations live in `i18n/desktophub_ja.ts`.
+
+After adding or changing strings, refresh the translation files:
+
+```powershell
+cmake --build --preset mingw-debug --target update_translations
+```
+
+The `.qm` files are generated at build time and embedded in the executable. The initial language follows the OS display language; it can be changed in Settings.
+
 ## Project layout
 
 ```text
@@ -41,15 +61,28 @@ DesktopHub/
 ├── CMakeLists.txt
 ├── CMakePresets.json
 ├── docs/
+│   ├── dev-environment.md
+│   ├── requirements.md
+│   └── third-party-licenses.md
+├── i18n/
+│   ├── desktophub_en.ts
+│   └── desktophub_ja.ts
 ├── src/
 │   ├── main.cpp
+│   ├── core/
+│   │   └── AppSettings.h/.cpp
 │   └── gui/
 │       └── qml/
-│           └── Main.qml
+│           ├── Main.qml
+│           ├── Sidebar.qml
+│           ├── HomePage.qml
+│           ├── AppsPage.qml
+│           ├── SettingsPage.qml
+│           └── Theme.qml
 └── README.md
 ```
 
-The structure will grow with `core/`, `models/`, `services/`, and `tests/` as later phases are implemented.
+The structure will grow with `models/`, `services/`, and `tests/` as later phases are implemented.
 
 ## Documentation
 

@@ -1,8 +1,17 @@
 import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
-// Phase 0 placeholder window. The real dashboard layout is added in Phase 1.
-Window {
+// Top-level window: a fixed sidebar on the left and the active page on the right.
+ApplicationWindow {
     id: root
+
+    // Page indexes must match the order of the pages in the StackLayout below.
+    readonly property int pageHome: 0
+    readonly property int pageApps: 1
+    readonly property int pageSettings: 2
+
+    property int currentPage: pageHome
 
     width: 1200
     height: 760
@@ -10,12 +19,26 @@ Window {
     minimumHeight: 600
     visible: true
     title: qsTr("Desktop Hub")
-    color: "#1e1f22"
+    color: Theme.windowBackground
 
-    Text {
-        anchors.centerIn: parent
-        text: qsTr("Desktop Hub — Phase 0 build OK")
-        color: "#f2f3f5"
-        font.pixelSize: 20
+    RowLayout {
+        anchors.fill: parent
+        spacing: 0
+
+        Sidebar {
+            Layout.fillHeight: true
+            currentPage: root.currentPage
+            onPageRequested: (page) => root.currentPage = page
+        }
+
+        StackLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            currentIndex: root.currentPage
+
+            HomePage {}
+            AppsPage {}
+            SettingsPage {}
+        }
     }
 }
