@@ -7,6 +7,9 @@
 #include <QTranslator>
 
 #include "core/AppSettings.h"
+#include "gui/AppController.h"
+#include "services/IconProvider.h"
+#include "services/JsonStorage.h"
 
 #include <cstdlib>
 
@@ -28,12 +31,20 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    // Use the same singleton instance that QML receives. This guarantees that
-    // the translation setup and the settings page operate on one object.
+    // Use the same singleton instances that QML receives.
     AppSettings *settings = engine.singletonInstance<AppSettings *>(
         QStringLiteral("DesktopHub"), QStringLiteral("AppSettings"));
-    if (!settings) {
+    AppController *controller = engine.singletonInstance<AppController *>(
+        QStringLiteral("DesktopHub"), QStringLiteral("App"));
+    if (!settings || !controller) {
         return EXIT_FAILURE;
+    }
+
+    // Install the stored UI language before loading data so that any startup
+    // warning is generated in the correct language.
+    const QString storedLanguage = JsonStorage::storedLanguage();
+    if (!storedLanguage.isEmpty()) {
+        settings->setLanguage(storedLanguage);
     }
 
     // Translation files are compiled into the executable by CMake.
@@ -47,12 +58,19 @@ int main(int argc, char *argv[])
     };
     applyLanguage();
 
+    // Loads data.json and applies the stored language before QML starts.
+    controller->initialize(settings);
+
     // Switch the UI language immediately without restarting the application.
     QObject::connect(settings, &AppSettings::languageChanged, &engine,
                      [&engine, &applyLanguage]() {
                          applyLanguage();
                          engine.retranslate();
                      });
+
+    // Shell icons are requested from QML as image://itemicon/<id>/<revision>.
+    engine.addImageProvider(QStringLiteral("itemicon"),
+                            new IconProvider(controller->items()));
 
     // Exit with an error instead of silently running without a window
     // when the QML entry point cannot be created.

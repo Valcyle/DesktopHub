@@ -30,8 +30,19 @@ qt_policy(SET QTP0004 NEW)
 
 qt_add_executable(DesktopHub
     src/main.cpp
+    src/core/AppPaths.h
+    src/core/AppPaths.cpp
     src/core/AppSettings.h
     src/core/AppSettings.cpp
+    src/core/Item.h
+    src/gui/AppController.h
+    src/gui/AppController.cpp
+    src/models/ItemModel.h
+    src/models/ItemModel.cpp
+    src/services/IconProvider.h
+    src/services/IconProvider.cpp
+    src/services/JsonStorage.h
+    src/services/JsonStorage.cpp
 )
 
 # All QML files are registered at the root of the "DesktopHub" module.
@@ -43,6 +54,7 @@ set(DESKTOPHUB_QML_FILES
     src/gui/qml/HomePage.qml
     src/gui/qml/AppsPage.qml
     src/gui/qml/SettingsPage.qml
+    src/gui/qml/ItemDialog.qml
 )
 
 foreach(qml_file IN LISTS DESKTOPHUB_QML_FILES)
@@ -72,9 +84,15 @@ else()
     target_compile_options(DesktopHub PRIVATE -Wall -Wextra)
 endif()
 
-# "src" is used by our own includes, and "src/core" lets the generated QML type
-# registration find <AppSettings.h>.
-target_include_directories(DesktopHub PRIVATE src src/core)
+# "src" is used by our own includes; the subdirectories let the generated QML
+# type registration find headers such as <AppSettings.h> and <AppController.h>.
+target_include_directories(DesktopHub PRIVATE
+    src
+    src/core
+    src/gui
+    src/models
+    src/services
+)
 
 target_link_libraries(DesktopHub PRIVATE
     Qt6::Core
@@ -83,6 +101,11 @@ target_link_libraries(DesktopHub PRIVATE
     Qt6::Quick
     Qt6::QuickControls2
 )
+
+if(WIN32)
+    # Shell icon extraction and COM initialization.
+    target_link_libraries(DesktopHub PRIVATE shell32 comctl32 ole32)
+endif()
 
 # Compile the translation files into the executable under ":/i18n".
 # The update_translations target refreshes the .ts files with lupdate.

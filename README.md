@@ -4,15 +4,21 @@
 
 Desktop Hub is a Windows desktop dashboard that keeps the applications, folders, and websites you use every day in one place. Instead of being just another launcher, it is built around a customizable dashboard that can grow with future panels, widgets, and integrations.
 
-> Status: early development. Phase 1 (basic window, English/Japanese translation base) is complete. Item management and storage are next.
+> Status: Phase 2 is complete. Items can be registered, edited, deleted, launched, and saved to disk. Search, categories, and favorites are next.
 
 ## Features
 
 - Dark dashboard window with a fixed sidebar (Home, Apps, Settings)
 - English and Japanese UI, switchable from Settings without restarting
+- Register applications (`.exe`), shortcuts (`.lnk`), folders, and `http`/`https` URLs
+- Real Windows Shell icons with a built-in fallback for missing icons
+- Double-click or press Enter to launch an item
+- Inline validation for names, paths, and URLs
+- Automatic JSON saving after every change, with a one-generation backup
+- Recovery flow when the data file is corrupt
 - Responsive layout that works down to the 900 x 600 minimum size
 
-Planned for the next phases: item registration (apps, folders, URLs), search, categories, favorites, JSON persistence, Shell icons, and error handling.
+Planned: search, categories, favorites on Home, logging, single-instance enforcement, and the final UI polish.
 
 ## Requirements
 
@@ -42,9 +48,19 @@ You can also open the project folder directly in Qt Creator or in VS Code with t
 
 A release build is available through the `mingw-release` preset.
 
+## Data storage
+
+- Data file: `data.json` under `QStandardPaths::AppDataLocation`
+- Previous version: `data.json.bak`
+- Corrupt files are moved to `data.corrupt-YYYYMMDD-HHMMSS.json`
+- Format: UTF-8 JSON with `schemaVersion: 1`
+- The file is written with `QSaveFile` for atomic replacement
+
+Application data and logs can contain local file paths, including your Windows user name, so review them before sharing. Runtime data, backups, and logs are excluded from this repository by `.gitignore`.
+
 ## Translations
 
-English is the source language. Every user-facing string goes through `qsTr()`, and Japanese translations live in `i18n/desktophub_ja.ts`.
+English is the source language. Every user-facing string goes through `qsTr()` or `tr()`, and Japanese translations live in `i18n/desktophub_ja.ts`.
 
 After adding or changing strings, refresh the translation files:
 
@@ -52,7 +68,7 @@ After adding or changing strings, refresh the translation files:
 cmake --build --preset mingw-debug --target update_translations
 ```
 
-The `.qm` files are generated at build time and embedded in the executable. The initial language follows the OS display language; it can be changed in Settings.
+The `.qm` files are generated at build time and embedded in the executable. The initial language follows the OS display language or the language stored in `data.json`; it can be changed in Settings.
 
 ## Project layout
 
@@ -69,20 +85,14 @@ DesktopHub/
 │   └── desktophub_ja.ts
 ├── src/
 │   ├── main.cpp
-│   ├── core/
-│   │   └── AppSettings.h/.cpp
-│   └── gui/
-│       └── qml/
-│           ├── Main.qml
-│           ├── Sidebar.qml
-│           ├── HomePage.qml
-│           ├── AppsPage.qml
-│           ├── SettingsPage.qml
-│           └── Theme.qml
+│   ├── core/        # paths, settings, shared data types
+│   ├── gui/         # QML-facing controller and UI
+│   ├── models/      # item list model
+│   └── services/    # JSON storage and shell icon provider
 └── README.md
 ```
 
-The structure will grow with `models/`, `services/`, and `tests/` as later phases are implemented.
+Automated tests are not set up yet; the current verification is manual.
 
 ## Documentation
 
@@ -93,8 +103,6 @@ The structure will grow with `models/`, `services/`, and `tests/` as later phase
 ## Privacy
 
 Desktop Hub works fully offline. It does not send telemetry or usage data.
-
-Application data and logs are stored locally under the paths provided by `QStandardPaths`. Logs can contain full file paths, including your Windows user name, so please review them before sharing them in a bug report. Runtime data, backups, and logs are excluded from this repository by `.gitignore`.
 
 ## License
 
