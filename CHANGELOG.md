@@ -4,6 +4,16 @@ All notable changes to Desktop Hub are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project uses semantic versioning.
 
+## [0.1.2] - 2026-11-08
+
+### Fixed
+
+- Update downloads now use the GitHub API asset endpoint with the correct
+  `Accept` header. The public release download endpoint returned HTTP 504
+  during the beta, so the updater needed a more reliable route.
+- The feed parser accepts both the release list (GitHub API) and a single
+  release object (local test feeds), and selects the highest version.
+
 ## [0.1.1] - 2026-11-08
 
 First beta release.

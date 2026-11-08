@@ -67,10 +67,12 @@ ReleaseInfo parseRelease(const QJsonObject &release)
     for (const QJsonValue &value : assets) {
         const QJsonObject asset = value.toObject();
         const QString name = asset.value(QStringLiteral("name")).toString();
-        QString url = asset.value(QStringLiteral("browser_download_url")).toString();
-        if (url.isEmpty()) {
-            url = asset.value(QStringLiteral("url")).toString();
-        }
+        const QString apiUrl = asset.value(QStringLiteral("url")).toString();
+        const QString browserUrl =
+            asset.value(QStringLiteral("browser_download_url")).toString();
+        // Prefer the API asset endpoint: it has been more reliable than the
+        // public release download URL and supports the octet-stream header.
+        const QString url = apiUrl.isEmpty() ? browserUrl : apiUrl;
 
         if (url.isEmpty()) {
             continue;
@@ -291,7 +293,17 @@ void UpdateService::fetch(const QUrl &url, bool trackProgress, FetchCallback cal
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::UserAgentHeader,
                       QStringLiteral("DesktopHub/%1").arg(m_currentVersion));
-    request.setRawHeader("Accept", "application/vnd.github+json");
+
+    if (url.path().contains(QLatin1String("/releases/assets/"))) {
+        // Release asset endpoints return the binary only with this header.
+        request.setRawHeader("Accept", "application/octet-stream");
+    } else if (url.host().compare(QLatin1String("api.github.com"),
+                                  Qt::CaseInsensitive) == 0) {
+        request.setRawHeader("Accept", "application/vnd.github+json");
+    } else {
+        request.setRawHeader("Accept", "*/*");
+    }
+
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
                          QNetworkRequest::NoLessSafeRedirectPolicy);
     request.setTransferTimeout(20000);
