@@ -260,11 +260,21 @@ Launching:
 - Treat items that reference a missing `categoryId` as uncategorized.
 - Skip items with missing required fields, log them, and tell the user how many were skipped or adjusted.
 
-## 7. Out of scope for the MVP
+## 7. Licensing and brand
+
+- Source code: **Apache License 2.0** (`LICENSE`, `NOTICE`).
+- The Desktop Hub name and logo are not granted by the Apache license; see
+  `TRADEMARKS.md`.
+- Qt is used under the LGPLv3 with dynamic linking; its notices are kept
+  separately in `third_party/qt/` and shipped under `LICENSES/Qt/`.
+- Third-party components and their obligations are listed in
+  `docs/third-party-licenses.md`.
+
+## 8. Out of scope for the MVP
 
 Desktop widgets, floating panels, advanced shortcuts, workspaces, batch launching, window arrangement, clipboard management, system information, calendar/Discord/GitHub integrations, cloud sync, accounts, online licensing, payments, plugin installation, drag-and-drop registration, manual reordering, recently used items, import/export, and executable arguments.
 
-## 8. Non-functional requirements
+## 9. Non-functional requirements
 
 ### Performance
 

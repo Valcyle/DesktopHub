@@ -12,6 +12,7 @@ debug build and, for release checks, the packaged build.
 - [ ] A missing item target produces a startup notice without deleting the item.
 - [ ] A save failure shows a retry dialog and the quit warning appears on close.
 - [ ] The log file is written and rotates at 1 MB.
+- [ ] The package contains `LICENSE`, `NOTICE`, `TRADEMARKS.md`, and `LICENSES/Qt/`.
 
 ## Items
 

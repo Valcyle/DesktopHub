@@ -1,0 +1,15 @@
+Desktop Hub
+Copyright 2026 Valcyle
+
+Desktop Hub is licensed under the Apache License, Version 2.0.
+See the LICENSE file for the full text.
+
+This product includes third-party software:
+
+- Qt 6 (The Qt Company), licensed under the LGPLv3.
+  See third_party/qt/NOTICE.md and third_party/qt/LGPL-3.0.txt.
+- MinGW-w64 runtime libraries (GCC Runtime Library Exception).
+  See docs/third-party-licenses.md.
+
+The Desktop Hub name and logo are separate from the source-code license.
+See TRADEMARKS.md.

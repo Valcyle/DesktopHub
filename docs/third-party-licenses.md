@@ -1,6 +1,8 @@
 # Third-party licenses
 
-This file records third-party components used by Desktop Hub and the obligations that apply when distributing the application.
+Desktop Hub itself is licensed under the **Apache License 2.0** (see the
+`LICENSE` and `NOTICE` files at the repository root). This file covers only the
+third-party components used by the application.
 
 ## Qt 6.12.0
 

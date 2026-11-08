@@ -141,6 +141,9 @@ DesktopHub/
 ├── scripts/         # package.ps1
 ├── src/
 ├── third_party/     # Qt LGPL notices
+├── LICENSE
+├── NOTICE
+├── TRADEMARKS.md
 └── README.md
 ```
 
@@ -160,9 +163,11 @@ Desktop Hub works fully offline. It does not send telemetry or usage data.
 
 ## License
 
-Desktop Hub's own source-code license has not been chosen yet. The license and
-distribution model will be decided before the first public release. The product
-name and logo are separate from the source code license.
+Desktop Hub is licensed under the **Apache License 2.0**. See
+[`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+
+The Desktop Hub name and logo are separate from the source-code license; see
+[`TRADEMARKS.md`](TRADEMARKS.md).
 
 Qt is used under the LGPLv3. Its license texts and notices are stored in
 [`third_party/qt/`](third_party/qt/NOTICE.md) and copied into release packages
