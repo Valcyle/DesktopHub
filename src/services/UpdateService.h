@@ -71,6 +71,7 @@ private:
     QString m_errorText;
     QUrl m_zipUrl;
     QUrl m_checksumUrl;
+    QString m_zipFileName;
     bool m_available = false;
     bool m_busy = false;
     bool m_userInitiated = false;

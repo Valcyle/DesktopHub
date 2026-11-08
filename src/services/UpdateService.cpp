@@ -28,13 +28,15 @@ struct ReleaseInfo
 {
     QString version;
     QString notes;
+    QString zipName;
     QUrl zipUrl;
     QUrl checksumUrl;
     QVersionNumber parsedVersion;
 
     bool isValid() const
     {
-        return !parsedVersion.isNull() && !zipUrl.isEmpty() && !checksumUrl.isEmpty();
+        return !parsedVersion.isNull() && !zipName.isEmpty()
+            && !zipUrl.isEmpty() && !checksumUrl.isEmpty();
     }
 };
 
@@ -79,6 +81,7 @@ ReleaseInfo parseRelease(const QJsonObject &release)
         }
 
         if (info.zipUrl.isEmpty() && name.endsWith(QLatin1String(".zip"), Qt::CaseInsensitive)) {
+            info.zipName = name;
             info.zipUrl = QUrl(url);
         } else if (info.checksumUrl.isEmpty()
                    && (name == QLatin1String("SHA256SUMS.txt")
@@ -231,7 +234,7 @@ void UpdateService::downloadAndInstall()
         }
 
         const QString expected = checksumFor(
-            QString::fromUtf8(checksumData), QUrl(m_zipUrl).fileName());
+            QString::fromUtf8(checksumData), m_zipFileName);
         if (expected.isEmpty()) {
             fail(tr("The published checksum does not include the update archive."));
             return;
@@ -407,6 +410,7 @@ void UpdateService::handleReleaseFeed(const QByteArray &data,
     if (selected.parsedVersion <= current) {
         m_available = false;
         m_zipUrl.clear();
+        m_zipFileName.clear();
         m_checksumUrl.clear();
         setStatus(tr("You are using the latest version (%1).")
                       .arg(QStringLiteral("v") + m_currentVersion));
@@ -419,6 +423,7 @@ void UpdateService::handleReleaseFeed(const QByteArray &data,
     m_latestVersion = selected.version;
     m_releaseNotes = selected.notes;
     m_available = true;
+    m_zipFileName = selected.zipName;
     m_zipUrl = selected.zipUrl;
     m_checksumUrl = selected.checksumUrl;
     m_progress = 0;

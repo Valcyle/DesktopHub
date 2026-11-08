@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 project(DesktopHub
-    VERSION 0.1.2
+    VERSION 0.1.3
     DESCRIPTION "A customizable desktop dashboard for Windows."
     LANGUAGES CXX
 )

@@ -4,6 +4,14 @@ All notable changes to Desktop Hub are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project uses semantic versioning.
 
+## [0.1.3] - 2026-11-08
+
+### Fixed
+
+- The updater now matches the downloaded archive against the release asset
+  name instead of the URL basename. API asset URLs use IDs, so the previous
+  comparison could not find the checksum entry.
+
 ## [0.1.2] - 2026-11-08
 
 ### Fixed
