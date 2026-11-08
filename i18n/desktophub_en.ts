@@ -44,6 +44,17 @@ Edit the item and register it again.</source>
         <source>Could not save data</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>%n item(s) could not be found. Edit them from Apps and register them again.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>... and %1 more</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AppsPage</name>
@@ -61,6 +72,10 @@ Edit the item and register it again.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Read-only mode: changes are not saved.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add item</source>
@@ -180,6 +195,10 @@ Edit the item and register it again.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Read-only mode: changes are not saved.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Favorite</source>
@@ -436,6 +455,22 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes could not be saved. Quit without saving them?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Data notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -444,6 +479,10 @@ An empty dashboard has been started.</source>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read-only mode: changes are not saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -547,6 +586,21 @@ An empty dashboard has been started.</source>
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SingleInstance</name>
+    <message>
+        <source>The single-instance lock file could not be created because of a permission error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The single-instance lock file could not be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Another instance is already running.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

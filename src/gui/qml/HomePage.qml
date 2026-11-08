@@ -31,6 +31,13 @@ Item {
                     color: Theme.textSecondary
                     font.pixelSize: 13
                 }
+
+                Text {
+                    visible: App.readOnly
+                    text: qsTr("Read-only mode: changes are not saved.")
+                    color: "#ffcc66"
+                    font.pixelSize: 12
+                }
             }
 
             Item {
@@ -138,6 +145,7 @@ Item {
                             }
 
                             ToolButton {
+                                enabled: !App.readOnly
                                 onClicked: App.items.setFavorite(model.itemId, !model.favorite)
                                 Accessible.name: qsTr("Favorite")
 

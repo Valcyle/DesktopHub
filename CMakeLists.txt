@@ -50,6 +50,10 @@ qt_add_executable(DesktopHub
     src/services/IconProvider.cpp
     src/services/JsonStorage.h
     src/services/JsonStorage.cpp
+    src/services/Logger.h
+    src/services/Logger.cpp
+    src/services/SingleInstance.h
+    src/services/SingleInstance.cpp
 )
 
 # All QML files are registered at the root of the "DesktopHub" module.

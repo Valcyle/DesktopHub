@@ -35,6 +35,13 @@ Item {
                     color: Theme.textSecondary
                     font.pixelSize: 13
                 }
+
+                Text {
+                    visible: App.readOnly
+                    text: qsTr("Read-only mode: changes are not saved.")
+                    color: "#ffcc66"
+                    font.pixelSize: 12
+                }
             }
 
             Item {
@@ -43,6 +50,7 @@ Item {
 
             Button {
                 text: qsTr("Add item")
+                enabled: !App.readOnly
                 onClicked: itemDialog.openForAdd()
             }
         }
@@ -154,6 +162,7 @@ Item {
                         }
 
                         ToolButton {
+                            enabled: !App.readOnly
                             onClicked: App.items.setFavorite(model.itemId, !model.favorite)
                             Accessible.name: qsTr("Favorite")
 
@@ -168,11 +177,13 @@ Item {
 
                         ToolButton {
                             text: qsTr("Edit")
+                            enabled: !App.readOnly
                             onClicked: itemDialog.openForEdit(model.itemId)
                         }
 
                         ToolButton {
                             text: qsTr("Delete")
+                            enabled: !App.readOnly
                             onClicked: {
                                 page.pendingDeleteId = model.itemId
                                 page.pendingDeleteName = model.name

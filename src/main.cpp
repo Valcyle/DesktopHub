@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <QQuickWindow>
 #include <QStringLiteral>
 #include <QStyleHints>
 #include <QTranslator>
@@ -10,8 +11,28 @@
 #include "gui/AppController.h"
 #include "services/IconProvider.h"
 #include "services/JsonStorage.h"
+#include "services/Logger.h"
+#include "services/SingleInstance.h"
 
 #include <cstdlib>
+
+#ifdef Q_OS_WIN
+#  include <windows.h>
+#endif
+
+namespace {
+void showAlreadyRunningMessage()
+{
+#ifdef Q_OS_WIN
+    MessageBoxW(
+        nullptr,
+        L"Desktop Hub is already running, but its window could not be brought to the front.\n\n"
+        L"Desktop Hub は既に起動していますが、既存のウィンドウを前面に表示できませんでした。",
+        L"Desktop Hub",
+        MB_OK | MB_ICONWARNING);
+#endif
+}
+} // namespace
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +44,24 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(QStringLiteral("Valcyle"));
     QCoreApplication::setApplicationName(QStringLiteral("DesktopHub"));
     QCoreApplication::setApplicationVersion(QStringLiteral("0.1.0"));
+
+    Logger::initialize();
+    Logger::info(QStringLiteral("Starting Desktop Hub %1 (Qt %2)")
+                     .arg(QCoreApplication::applicationVersion(),
+                          QString::fromLatin1(qVersion())));
+
+    // A second instance must not run concurrently with the first one.
+    SingleInstance singleInstance;
+    QString singleInstanceError;
+    if (!singleInstance.acquire(&singleInstanceError)) {
+        if (!singleInstance.notifyExisting()) {
+            Logger::warning(QStringLiteral("Second instance could not reach the "
+                                           "existing window: %1")
+                                .arg(singleInstanceError));
+            showAlreadyRunningMessage();
+        }
+        return 0;
+    }
 
     // Fusion behaves predictably across Windows versions and can follow the
     // dark color scheme requested below.
@@ -73,6 +112,31 @@ int main(int argc, char *argv[])
     engine.addImageProvider(QStringLiteral("itemicon"),
                             new IconProvider(controller->items()));
 
+    // Raise the window when a second instance asks for it.
+    bool showPending = false;
+    const auto showMainWindow = [&engine]() {
+        if (engine.rootObjects().isEmpty()) {
+            return;
+        }
+        if (auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().constFirst())) {
+            window->show();
+            window->raise();
+            window->requestActivate();
+        }
+    };
+
+    QObject::connect(&singleInstance, &SingleInstance::showRequested, &app,
+                     [&engine, &showPending, &showMainWindow]() {
+                         if (engine.rootObjects().isEmpty()) {
+                             showPending = true;
+                             return;
+                         }
+                         showMainWindow();
+                     });
+
+    QObject::connect(&app, &QCoreApplication::aboutToQuit,
+                     []() { Logger::info(QStringLiteral("Shutting down.")); });
+
     // Exit with an error instead of silently running without a window
     // when the QML entry point cannot be created.
     QObject::connect(
@@ -84,6 +148,10 @@ int main(int argc, char *argv[])
 
     // "DesktopHub" is the QML module URI declared in CMakeLists.txt.
     engine.loadFromModule(QStringLiteral("DesktopHub"), QStringLiteral("Main"));
+
+    if (showPending) {
+        showMainWindow();
+    }
 
     return app.exec();
 }

@@ -4,7 +4,7 @@
 
 Desktop Hub is a Windows desktop dashboard that keeps the applications, folders, and websites you use every day in one place. Instead of being just another launcher, it is built around a customizable dashboard that can grow with future panels, widgets, and integrations.
 
-> Status: Phase 3 is complete. Items can be registered, categorized, searched, favorited, and launched, and the Home dashboard groups them into sections. Logging and single-instance protection are next.
+> Status: Phase 4 is complete. The application now includes logging, single-instance protection, read-only mode, and unsaved-change warnings. The remaining work is MVP polish and release preparation.
 
 ## Features
 
@@ -18,10 +18,15 @@ Desktop Hub is a Windows desktop dashboard that keeps the applications, folders,
 - Category filter on Apps; add, rename, and delete categories in Settings
 - Favorites section on Home, followed by category sections and uncategorized items
 - Automatic JSON saving after every change, with a one-generation backup
+- Missing-file detection at startup and at launch time
+- Read-only mode when the data file cannot be prepared, with editing disabled
+- Warning before quitting when changes could not be saved
+- Single-instance enforcement that raises the existing window
+- Local logging with 1 MB rotation and three generations
 - Recovery flow when the data file is corrupt
 - Responsive layout that works down to the 900 x 600 minimum size
 
-Planned: logging, single-instance enforcement, and the final UI polish.
+Planned: final UI polish, accessibility review, release packaging, and license texts.
 
 ## Requirements
 
@@ -58,6 +63,9 @@ A release build is available through the `mingw-release` preset.
 - Corrupt files are moved to `data.corrupt-YYYYMMDD-HHMMSS.json`
 - Format: UTF-8 JSON with `schemaVersion: 1`
 - The file is written with `QSaveFile` for atomic replacement
+- Logs: `logs/desktophub.log` under `QStandardPaths::AppLocalDataLocation`
+- Log rotation: at 1 MB, keeping three generations in total
+- Only one instance can run; a second launch raises the existing window
 
 Application data and logs can contain local file paths, including your Windows user name, so review them before sharing. Runtime data, backups, and logs are excluded from this repository by `.gitignore`.
 

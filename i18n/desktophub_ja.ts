@@ -49,6 +49,16 @@ Edit the item and register it again.</source>
       <source>Could not save data</source>
       <translation>データを保存できません</translation>
     </message>
+    <message numerus="yes">
+      <source>%n item(s) could not be found. Edit them from Apps and register them again.</source>
+      <translation>
+        <numerusform>%n 件の項目が見つかりません。アプリ画面から編集して登録し直してください。</numerusform>
+      </translation>
+    </message>
+    <message>
+      <source>... and %1 more</source>
+      <translation>…ほか %1 件</translation>
+    </message>
   </context>
   <context>
     <name>AppsPage</name>
@@ -65,6 +75,10 @@ Edit the item and register it again.</source>
       <translation>
         <numerusform>%n 件</numerusform>
       </translation>
+    </message>
+    <message>
+      <source>Read-only mode: changes are not saved.</source>
+      <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
       <source>Add item</source>
@@ -183,6 +197,10 @@ Edit the item and register it again.</source>
       <translation>
         <numerusform>%n 件</numerusform>
       </translation>
+    </message>
+    <message>
+      <source>Read-only mode: changes are not saved.</source>
+      <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
       <source>Favorite</source>
@@ -446,6 +464,22 @@ An empty dashboard has been started.</source>
       <translation>閉じる</translation>
     </message>
     <message>
+      <source>Unsaved changes</source>
+      <translation>未保存の変更</translation>
+    </message>
+    <message>
+      <source>Changes could not be saved. Quit without saving them?</source>
+      <translation>変更を保存できませんでした。保存せずに終了しますか？</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>キャンセル</translation>
+    </message>
+    <message>
+      <source>Quit</source>
+      <translation>終了</translation>
+    </message>
+    <message>
       <source>Data notice</source>
       <translation>データのお知らせ</translation>
     </message>
@@ -455,6 +489,10 @@ An empty dashboard has been started.</source>
     <message>
       <source>Settings</source>
       <translation>設定</translation>
+    </message>
+    <message>
+      <source>Read-only mode: changes are not saved.</source>
+      <translation>読み取り専用モード: 変更は保存されません。</translation>
     </message>
     <message>
       <source>General</source>
@@ -558,6 +596,21 @@ An empty dashboard has been started.</source>
     <message>
       <source>Settings</source>
       <translation>設定</translation>
+    </message>
+  </context>
+  <context>
+    <name>SingleInstance</name>
+    <message>
+      <source>The single-instance lock file could not be created because of a permission error.</source>
+      <translation>権限エラーのため、多重起動防止用のロックファイルを作成できませんでした。</translation>
+    </message>
+    <message>
+      <source>The single-instance lock file could not be created.</source>
+      <translation>多重起動防止用のロックファイルを作成できませんでした。</translation>
+    </message>
+    <message>
+      <source>Another instance is already running.</source>
+      <translation>既に別のインスタンスが起動しています。</translation>
     </message>
   </context>
 </TS>

@@ -12,4 +12,6 @@ public:
     static QString backupFilePath();
     static QString corruptFilePath();
     static QString logsDirectory();
+    static QString logFilePath();
+    static QString lockFilePath();
 };

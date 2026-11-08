@@ -28,6 +28,13 @@ Item {
                 font.bold: true
             }
 
+            Text {
+                visible: App.readOnly
+                text: qsTr("Read-only mode: changes are not saved.")
+                color: "#ffcc66"
+                font.pixelSize: 12
+            }
+
             Rectangle {
                 Layout.fillWidth: true
                 implicitHeight: generalColumn.implicitHeight + 48
@@ -73,6 +80,7 @@ Item {
                         ComboBox {
                             id: languageBox
                             Layout.preferredWidth: 220
+                            enabled: !App.readOnly
 
                             model: [
                                 { code: "en", name: qsTr("English") },
@@ -154,6 +162,7 @@ Item {
 
                         Button {
                             text: qsTr("Add category")
+                            enabled: !App.readOnly
                             onClicked: categoryDialog.openForAdd()
                         }
                     }
@@ -189,11 +198,13 @@ Item {
 
                             ToolButton {
                                 text: qsTr("Rename")
+                                enabled: !App.readOnly
                                 onClicked: categoryDialog.openForEdit(model.categoryId)
                             }
 
                             ToolButton {
                                 text: qsTr("Delete")
+                                enabled: !App.readOnly
                                 onClicked: {
                                     page.pendingCategoryId = model.categoryId
                                     page.pendingCategoryName = model.categoryName

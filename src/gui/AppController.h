@@ -29,6 +29,8 @@ class AppController : public QObject
     Q_PROPERTY(QString searchText READ searchText WRITE setSearchText NOTIFY searchTextChanged)
     Q_PROPERTY(QString startupWarning READ startupWarning NOTIFY startupWarningChanged)
     Q_PROPERTY(bool fatalError READ fatalError NOTIFY startupWarningChanged)
+    Q_PROPERTY(bool readOnly READ readOnly NOTIFY readOnlyChanged)
+    Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
@@ -47,6 +49,8 @@ public:
 
     QString startupWarning() const;
     bool fatalError() const;
+    bool readOnly() const;
+    bool hasUnsavedChanges() const;
 
     Q_INVOKABLE void clearStartupWarning();
     Q_INVOKABLE void launchItem(const QString &id);
@@ -70,10 +74,13 @@ signals:
     void startupWarningChanged();
     void categoryOptionsChanged();
     void searchTextChanged();
+    void readOnlyChanged();
+    void hasUnsavedChangesChanged();
 
 private:
     void load();
     void onCategoriesChanged();
+    void setUnsavedChanges(bool unsaved);
 
     ItemModel *m_items = nullptr;
     CategoryModel *m_categories = nullptr;
@@ -85,4 +92,5 @@ private:
     bool m_fatalError = false;
     bool m_readOnly = false;
     bool m_loading = false;
+    bool m_hasUnsavedChanges = false;
 };

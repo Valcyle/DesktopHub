@@ -34,3 +34,14 @@ QString AppPaths::logsDirectory()
     return QDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation))
         .filePath(QStringLiteral("logs"));
 }
+
+QString AppPaths::logFilePath()
+{
+    return QDir(logsDirectory()).filePath(QStringLiteral("desktophub.log"));
+}
+
+QString AppPaths::lockFilePath()
+{
+    return QDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation))
+        .filePath(QStringLiteral("desktophub.lock"));
+}

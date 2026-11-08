@@ -5,8 +5,10 @@
 #include <QFileInfo>
 #include <QStringList>
 
+#include "core/AppPaths.h"
 #include "core/AppSettings.h"
 #include "services/JsonStorage.h"
+#include "services/Logger.h"
 
 AppController::AppController(QObject *parent)
     : QObject(parent)
@@ -101,6 +103,16 @@ bool AppController::fatalError() const
     return m_fatalError;
 }
 
+bool AppController::readOnly() const
+{
+    return m_readOnly;
+}
+
+bool AppController::hasUnsavedChanges() const
+{
+    return m_hasUnsavedChanges;
+}
+
 void AppController::clearStartupWarning()
 {
     if (m_startupWarning.isEmpty()) {
@@ -119,6 +131,7 @@ void AppController::launchItem(const QString &id)
 
     if (item.type == QLatin1String("url")) {
         if (!QDesktopServices::openUrl(QUrl(item.target))) {
+            Logger::warning(QStringLiteral("Could not open URL: %1").arg(item.target));
             emit errorOccurred(tr("Could not open link"),
                                tr("The link could not be opened in your browser:\n%1")
                                    .arg(item.target),
@@ -129,6 +142,8 @@ void AppController::launchItem(const QString &id)
 
     const QFileInfo info(item.target);
     if (!info.exists()) {
+        Logger::warning(QStringLiteral("Item target not found: %1 -> %2")
+                            .arg(item.name, item.target));
         emit errorOccurred(tr("Item not found"),
                            tr("The file or folder could not be found:\n%1\n\n"
                               "Edit the item and register it again.")
@@ -138,6 +153,7 @@ void AppController::launchItem(const QString &id)
     }
 
     if (!QDesktopServices::openUrl(QUrl::fromLocalFile(item.target))) {
+        Logger::warning(QStringLiteral("Could not open item: %1").arg(item.target));
         emit errorOccurred(tr("Could not open item"),
                            tr("The item could not be opened:\n%1").arg(item.target),
                            false);
@@ -168,6 +184,7 @@ bool AppController::save()
     }
 
     if (m_readOnly) {
+        setUnsavedChanges(true);
         emit errorOccurred(tr("Changes are not saved"),
                            tr("This session is read-only because the data file "
                               "could not be prepared."),
@@ -178,11 +195,24 @@ bool AppController::save()
     QString error;
     const QString language = m_settings ? m_settings->language() : QStringLiteral("en");
     if (!JsonStorage::save(m_items->items(), m_categories->categories(), language, &error)) {
+        setUnsavedChanges(true);
+        Logger::error(QStringLiteral("Saving data failed: %1").arg(error));
         emit errorOccurred(tr("Could not save data"), error, true);
         return false;
     }
 
+    setUnsavedChanges(false);
     return true;
+}
+
+void AppController::setUnsavedChanges(bool unsaved)
+{
+    if (m_hasUnsavedChanges == unsaved) {
+        return;
+    }
+
+    m_hasUnsavedChanges = unsaved;
+    emit hasUnsavedChangesChanged();
 }
 
 QString AppController::localFile(const QUrl &url) const
@@ -260,10 +290,51 @@ void AppController::load()
     if (!result.fatalMessage.isEmpty()) {
         messages.append(result.fatalMessage);
     }
+
+    // Report registered local items whose files or folders no longer exist.
+    // Items are kept and can be edited instead of being deleted automatically.
+    QStringList missingNames;
+    for (const Item &item : result.items) {
+        if (!isLocalItemType(item.type)) {
+            continue;
+        }
+        if (!QFileInfo::exists(item.target)) {
+            missingNames.append(item.name);
+            Logger::warning(QStringLiteral("Missing item target: %1 -> %2")
+                                .arg(item.name, item.target));
+        }
+    }
+    if (!missingNames.isEmpty()) {
+        QString message = tr("%n item(s) could not be found. Edit them from Apps "
+                             "and register them again.",
+                             "", missingNames.size());
+        const QStringList preview = missingNames.mid(0, 10);
+        message += QLatin1Char('\n') + preview.join(QLatin1Char('\n'));
+        if (missingNames.size() > preview.size()) {
+            message += QLatin1Char('\n')
+                + tr("... and %1 more").arg(missingNames.size() - preview.size());
+        }
+        messages.append(message);
+    }
+
     m_startupWarning = messages.join(QStringLiteral("\n\n"));
+
+    Logger::info(QStringLiteral("Loaded items=%1 categories=%2 from %3")
+                     .arg(result.items.size())
+                     .arg(result.categories.size())
+                     .arg(AppPaths::dataFilePath()));
+    if (!m_startupWarning.isEmpty()) {
+        Logger::warning(QStringLiteral("Startup notice: %1").arg(m_startupWarning));
+    }
+    if (m_readOnly) {
+        Logger::warning(QStringLiteral("Running in read-only mode."));
+    }
+
+    setUnsavedChanges(false);
 
     m_loading = false;
 
+    emit readOnlyChanged();
     m_home->rebuild();
     emit categoryOptionsChanged();
     emit startupWarningChanged();

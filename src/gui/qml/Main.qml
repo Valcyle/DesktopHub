@@ -12,6 +12,7 @@ ApplicationWindow {
     readonly property int pageSettings: 2
 
     property int currentPage: pageHome
+    property bool allowQuit: false
 
     width: 1200
     height: 760
@@ -20,6 +21,13 @@ ApplicationWindow {
     visible: true
     title: qsTr("Desktop Hub")
     color: Theme.windowBackground
+
+    onClosing: (close) => {
+        if (App.hasUnsavedChanges && !root.allowQuit) {
+            close.accepted = false
+            quitDialog.open()
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -106,6 +114,51 @@ ApplicationWindow {
         sequence: "Return"
         enabled: errorDialog.visible
         onActivated: errorDialog.close()
+    }
+
+    Dialog {
+        id: quitDialog
+
+        modal: true
+        anchors.centerIn: parent
+        width: 460
+        padding: 24
+        title: qsTr("Unsaved changes")
+        closePolicy: Popup.CloseOnEscape
+
+        contentItem: Text {
+            width: quitDialog.availableWidth
+            text: qsTr("Changes could not be saved. Quit without saving them?")
+            color: Theme.textPrimary
+            font.pixelSize: 13
+            wrapMode: Text.WordWrap
+        }
+
+        footer: DialogButtonBox {
+            Button {
+                text: qsTr("Cancel")
+                DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+                onClicked: quitDialog.close()
+            }
+
+            Button {
+                text: qsTr("Quit")
+                DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
+                onClicked: {
+                    root.allowQuit = true
+                    Qt.quit()
+                }
+            }
+        }
+
+        Shortcut {
+            sequence: "Return"
+            enabled: quitDialog.visible
+            onActivated: {
+                root.allowQuit = true
+                Qt.quit()
+            }
+        }
     }
 
     Component.onCompleted: {
