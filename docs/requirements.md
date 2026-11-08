@@ -8,6 +8,19 @@ Desktop Hub is a Windows desktop application that manages applications, folders,
 
 Tagline: **Desktop Hub — One place for everything.**
 
+### Product identity
+
+| Item | Value |
+| --- | --- |
+| Display name | Desktop Hub |
+| Internal application name | DesktopHub |
+| Organization / author | Valcyle |
+| Data directory | `%APPDATA%\Valcyle\DesktopHub` |
+| Log directory | `%LOCALAPPDATA%\Valcyle\DesktopHub\logs` |
+
+These identifiers are stable. Changing them would change the storage paths and
+requires a migration of existing data.
+
 ## 2. Target users
 
 - People who want to organize their Windows working environment

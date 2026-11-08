@@ -38,12 +38,13 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    // TODO: Replace these temporary identifiers once the final product name
-    // and organization name are decided. On Windows they determine the
-    // directories used by QStandardPaths for data and logs.
+    // Product identity: "Desktop Hub" is the display name, while
+    // "DesktopHub" is the stable internal identifier used by QStandardPaths.
+    // Changing organization or application name changes the data/log paths.
     QCoreApplication::setOrganizationName(QStringLiteral("Valcyle"));
     QCoreApplication::setApplicationName(QStringLiteral("DesktopHub"));
     QCoreApplication::setApplicationVersion(QStringLiteral(DESKTOPHUB_VERSION));
+    QGuiApplication::setApplicationDisplayName(QStringLiteral("Desktop Hub"));
 
     Logger::initialize();
     Logger::info(QStringLiteral("Starting Desktop Hub %1 (Qt %2)")

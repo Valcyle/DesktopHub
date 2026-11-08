@@ -3,8 +3,17 @@
 #include <QString>
 
 // Central place for every path the application uses for user data.
-// Changing the application or organization name changes these paths, so keep
-// the migration logic in mind when the final product name is chosen.
+//
+// Product identity:
+//   Display name: Desktop Hub
+//   Internal ID:  DesktopHub
+//   Organization: Valcyle
+//
+// On Windows this resolves to:
+//   Data: %APPDATA%\Valcyle\DesktopHub
+//   Logs: %LOCALAPPDATA%\Valcyle\DesktopHub\logs
+//
+// Treat these identifiers as stable. Renaming them requires a migration.
 class AppPaths
 {
 public:

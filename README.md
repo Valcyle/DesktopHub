@@ -77,13 +77,24 @@ Qt LGPL notices under `LICENSES/Qt/`. `dist/` is not committed.
 ## Data storage
 
 - Data file: `data.json` under `QStandardPaths::AppDataLocation`
+  (`%APPDATA%\Valcyle\DesktopHub\data.json`)
 - Previous version: `data.json.bak`
 - Corrupt files are moved to `data.corrupt-YYYYMMDD-HHMMSS.json`
 - Format: UTF-8 JSON with `schemaVersion: 1`
 - The file is written with `QSaveFile` for atomic replacement
 - Logs: `logs/desktophub.log` under `QStandardPaths::AppLocalDataLocation`
+  (`%LOCALAPPDATA%\Valcyle\DesktopHub\logs`)
 - Log rotation: at 1 MB, keeping three generations in total
 - Only one instance can run; a second launch raises the existing window
+
+## Product identity
+
+- Display name: **Desktop Hub**
+- Internal application name: **DesktopHub** (used for data and log paths)
+- Organization/author: **Valcyle**
+
+These identifiers are stable. Renaming them changes the storage paths and
+requires a data migration.
 
 ## Updates
 
