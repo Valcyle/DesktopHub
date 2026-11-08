@@ -4,7 +4,7 @@
 
 Desktop Hub is a Windows desktop dashboard that keeps the applications, folders, and websites you use every day in one place. Instead of being just another launcher, it is built around a customizable dashboard that can grow with future panels, widgets, and integrations.
 
-> Status: Phase 2 is complete. Items can be registered, edited, deleted, launched, and saved to disk. Search, categories, and favorites are next.
+> Status: Phase 3 is complete. Items can be registered, categorized, searched, favorited, and launched, and the Home dashboard groups them into sections. Logging and single-instance protection are next.
 
 ## Features
 
@@ -14,11 +14,14 @@ Desktop Hub is a Windows desktop dashboard that keeps the applications, folders,
 - Real Windows Shell icons with a built-in fallback for missing icons
 - Double-click or press Enter to launch an item
 - Inline validation for names, paths, and URLs
+- Case-insensitive search by item name and category name, shared by Home and Apps
+- Category filter on Apps; add, rename, and delete categories in Settings
+- Favorites section on Home, followed by category sections and uncategorized items
 - Automatic JSON saving after every change, with a one-generation backup
 - Recovery flow when the data file is corrupt
 - Responsive layout that works down to the 900 x 600 minimum size
 
-Planned: search, categories, favorites on Home, logging, single-instance enforcement, and the final UI polish.
+Planned: logging, single-instance enforcement, and the final UI polish.
 
 ## Requirements
 
@@ -87,7 +90,8 @@ DesktopHub/
 │   ├── main.cpp
 │   ├── core/        # paths, settings, shared data types
 │   ├── gui/         # QML-facing controller and UI
-│   ├── models/      # item list model
+│   │   └── qml/     # Main, pages, dialogs, search field, Theme
+│   ├── models/      # item, category, filter, and Home section models
 │   └── services/    # JSON storage and shell icon provider
 └── README.md
 ```

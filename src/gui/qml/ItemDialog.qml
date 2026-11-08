@@ -51,6 +51,7 @@ Dialog {
         typeBox.currentIndex = 0
         targetField.text = ""
         nameField.text = ""
+        categoryBox.currentIndex = 0
         favoriteBox.checked = false
         resetFields()
         open()
@@ -66,6 +67,8 @@ Dialog {
         typeBox.currentIndex = typeIndexFor(item.type)
         targetField.text = item.target
         nameField.text = item.name
+        const categoryIndex = categoryBox.indexOfValue(item.categoryId)
+        categoryBox.currentIndex = categoryIndex >= 0 ? categoryIndex : 0
         favoriteBox.checked = item.favorite
         resetFields()
         nameTouched = true
@@ -92,8 +95,10 @@ Dialog {
         }
 
         const error = editId.length > 0
-            ? App.items.updateItem(editId, name, type, target, favoriteBox.checked)
-            : App.items.addItem(name, type, target, favoriteBox.checked)
+            ? App.items.updateItem(editId, name, type, target,
+                                   categoryBox.currentValue || "", favoriteBox.checked)
+            : App.items.addItem(name, type, target,
+                                categoryBox.currentValue || "", favoriteBox.checked)
 
         if (error.length > 0) {
             inlineError.text = error
@@ -208,6 +213,34 @@ Dialog {
             }
         }
 
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 12
+
+            Text {
+                text: qsTr("Category")
+                color: Theme.textSecondary
+                font.pixelSize: 13
+                Layout.preferredWidth: 90
+            }
+
+            ComboBox {
+                id: categoryBox
+                Layout.fillWidth: true
+
+                model: {
+                    const options = [{ id: "", name: qsTr("Uncategorized") }]
+                    const categories = App.categoryOptions
+                    for (let i = 0; i < categories.length; ++i) {
+                        options.push(categories[i])
+                    }
+                    return options
+                }
+                textRole: "name"
+                valueRole: "id"
+            }
+        }
+
         CheckBox {
             id: favoriteBox
             text: qsTr("Add to favorites")
@@ -235,6 +268,12 @@ Dialog {
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
             onClicked: dialog.commit()
         }
+    }
+
+    Shortcut {
+        sequence: "Return"
+        enabled: dialog.visible && !duplicateDialog.visible
+        onActivated: dialog.commit()
     }
 
     FileDialog {
@@ -292,6 +331,16 @@ Dialog {
                     duplicateDialog.close()
                     dialog.commit()
                 }
+            }
+        }
+
+        Shortcut {
+            sequence: "Return"
+            enabled: duplicateDialog.visible
+            onActivated: {
+                dialog.duplicateConfirmed = true
+                duplicateDialog.close()
+                dialog.commit()
             }
         }
     }

@@ -102,6 +102,12 @@ ApplicationWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Return"
+        enabled: errorDialog.visible
+        onActivated: errorDialog.close()
+    }
+
     Component.onCompleted: {
         if (App.startupWarning.length > 0) {
             errorDialog.title = qsTr("Data notice")

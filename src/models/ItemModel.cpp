@@ -66,6 +66,8 @@ QVariant ItemModel::data(const QModelIndex &index, int role) const
         return item.target;
     case CategoryIdRole:
         return item.categoryId;
+    case CategoryNameRole:
+        return m_categoryNames.value(item.categoryId);
     case FavoriteRole:
         return item.favorite;
     case CreatedAtRole:
@@ -85,6 +87,7 @@ QHash<int, QByteArray> ItemModel::roleNames() const
         { TypeRole, "type" },
         { TargetRole, "target" },
         { CategoryIdRole, "categoryId" },
+        { CategoryNameRole, "categoryName" },
         { FavoriteRole, "favorite" },
         { CreatedAtRole, "createdAt" },
         { RevisionRole, "revision" },
@@ -99,6 +102,7 @@ int ItemModel::count() const
 QString ItemModel::addItem(const QString &name,
                            const QString &type,
                            const QString &target,
+                           const QString &categoryId,
                            bool favorite)
 {
     QString normalizedTargetValue;
@@ -112,6 +116,7 @@ QString ItemModel::addItem(const QString &name,
     item.name = name.trimmed();
     item.type = type;
     item.target = normalizedTargetValue;
+    item.categoryId = normalizeCategoryId(categoryId);
     item.favorite = favorite;
     item.createdAt = QDateTime::currentDateTimeUtc();
 
@@ -129,6 +134,7 @@ QString ItemModel::updateItem(const QString &id,
                               const QString &name,
                               const QString &type,
                               const QString &target,
+                              const QString &categoryId,
                               bool favorite)
 {
     const int row = rowForId(id);
@@ -146,11 +152,14 @@ QString ItemModel::updateItem(const QString &id,
     item.name = name.trimmed();
     item.type = type;
     item.target = normalizedTargetValue;
+    item.categoryId = normalizeCategoryId(categoryId);
     item.favorite = favorite;
     ++item.revision;
 
     const QModelIndex changed = index(row, 0);
-    emit dataChanged(changed, changed, { NameRole, TypeRole, TargetRole, FavoriteRole, RevisionRole });
+    emit dataChanged(changed, changed,
+                     { NameRole, TypeRole, TargetRole, CategoryIdRole, CategoryNameRole,
+                       FavoriteRole, RevisionRole });
     emit itemsChanged();
     return {};
 }
@@ -241,16 +250,75 @@ void ItemModel::setItems(const QVector<Item> &items)
 {
     beginResetModel();
     m_items = items;
+    for (Item &item : m_items) {
+        if (!item.categoryId.isEmpty() && !m_categoryNames.contains(item.categoryId)) {
+            item.categoryId.clear();
+        }
+    }
     endResetModel();
 
     emit countChanged();
     // No itemsChanged here: loading data must not trigger another save.
 }
 
+void ItemModel::setCategoryNames(const QHash<QString, QString> &names)
+{
+    m_categoryNames = names;
+
+    if (!m_items.isEmpty()) {
+        emit dataChanged(index(0, 0), index(m_items.size() - 1, 0),
+                         { CategoryNameRole });
+    }
+}
+
 Item ItemModel::itemById(const QString &id) const
 {
     const int row = rowForId(id);
     return row < 0 ? Item{} : m_items.at(row);
+}
+
+void ItemModel::clearCategory(const QString &categoryId)
+{
+    if (categoryId.isEmpty()) {
+        return;
+    }
+
+    bool changed = false;
+    for (Item &item : m_items) {
+        if (item.categoryId == categoryId) {
+            item.categoryId.clear();
+            ++item.revision;
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        return;
+    }
+
+    emit dataChanged(index(0, 0), index(m_items.size() - 1, 0),
+                     { CategoryIdRole, CategoryNameRole, RevisionRole });
+    emit itemsChanged();
+}
+
+void ItemModel::pruneUnknownCategories()
+{
+    bool changed = false;
+    for (Item &item : m_items) {
+        if (!item.categoryId.isEmpty() && !m_categoryNames.contains(item.categoryId)) {
+            item.categoryId.clear();
+            ++item.revision;
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        return;
+    }
+
+    emit dataChanged(index(0, 0), index(m_items.size() - 1, 0),
+                     { CategoryIdRole, CategoryNameRole, RevisionRole });
+    emit itemsChanged();
 }
 
 QString ItemModel::normalizedTarget(const QString &type, const QString &target) const
@@ -328,6 +396,11 @@ QString ItemModel::validateAndNormalize(const QString &name,
 
     *normalizedTargetOut = normalized;
     return {};
+}
+
+QString ItemModel::normalizeCategoryId(const QString &categoryId) const
+{
+    return m_categoryNames.contains(categoryId) ? categoryId : QString();
 }
 
 int ItemModel::rowForId(const QString &id) const

@@ -8,6 +8,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QSaveFile>
+#include <QSet>
+#include <QStringList>
 
 #include <algorithm>
 
@@ -17,11 +19,6 @@ namespace {
 QString tr(const char *text)
 {
     return QCoreApplication::translate("JsonStorage", text);
-}
-
-QString tr(const char *text, int count)
-{
-    return QCoreApplication::translate("JsonStorage", text, nullptr, count);
 }
 
 QJsonObject itemToJson(const Item &item)
@@ -36,6 +33,14 @@ QJsonObject itemToJson(const Item &item)
     object.insert(QStringLiteral("favorite"), item.favorite);
     object.insert(QStringLiteral("createdAt"),
                   item.createdAt.toUTC().toString(Qt::ISODate));
+    return object;
+}
+
+QJsonObject categoryToJson(const Category &category)
+{
+    QJsonObject object;
+    object.insert(QStringLiteral("id"), category.id);
+    object.insert(QStringLiteral("name"), category.name);
     return object;
 }
 } // namespace
@@ -126,6 +131,39 @@ StorageLoadResult JsonStorage::load()
         result.language = language;
     }
 
+    QVector<Category> loadedCategories;
+    QSet<QString> categoryIds;
+    QSet<QString> categoryNamesLower;
+    const QJsonArray categories = root.value(QStringLiteral("categories")).toArray();
+    loadedCategories.reserve(categories.size());
+
+    for (const QJsonValue &value : categories) {
+        if (!value.isObject()) {
+            ++result.skippedCategories;
+            continue;
+        }
+
+        const QJsonObject object = value.toObject();
+        Category category;
+        category.id = object.value(QStringLiteral("id")).toString();
+        category.name = object.value(QStringLiteral("name")).toString().trimmed();
+
+        const QString nameKey = category.name.toLower();
+        if (category.id.isEmpty() || category.name.isEmpty()
+            || category.name.size() > 50
+            || categoryIds.contains(category.id)
+            || categoryNamesLower.contains(nameKey)) {
+            ++result.skippedCategories;
+            continue;
+        }
+
+        categoryIds.insert(category.id);
+        categoryNamesLower.insert(nameKey);
+        loadedCategories.append(category);
+    }
+
+    result.categories = loadedCategories;
+
     QVector<Item> loadedItems;
     const QJsonArray items = root.value(QStringLiteral("items")).toArray();
     loadedItems.reserve(items.size());
@@ -163,6 +201,11 @@ StorageLoadResult JsonStorage::load()
             continue;
         }
 
+        if (!item.categoryId.isEmpty() && !categoryIds.contains(item.categoryId)) {
+            item.categoryId.clear();
+            ++result.uncategorizedItems;
+        }
+
         loadedItems.append(item);
     }
 
@@ -175,15 +218,27 @@ StorageLoadResult JsonStorage::load()
 
     result.items = loadedItems;
 
+    QStringList warnings;
     if (result.skippedItems > 0) {
-        result.warning = tr("%n item(s) could not be loaded and were skipped.",
-                            result.skippedItems);
+        warnings.append(tr("%1 item(s) could not be loaded and were skipped.")
+                            .arg(result.skippedItems));
     }
+    if (result.skippedCategories > 0) {
+        warnings.append(tr("%1 category(ies) could not be loaded and were skipped.")
+                            .arg(result.skippedCategories));
+    }
+    if (result.uncategorizedItems > 0) {
+        warnings.append(tr("%1 item(s) referenced a missing category and were "
+                           "treated as uncategorized.")
+                            .arg(result.uncategorizedItems));
+    }
+    result.warning = warnings.join(QStringLiteral("\n\n"));
 
     return result;
 }
 
 bool JsonStorage::save(const QVector<Item> &items,
+                       const QVector<Category> &categories,
                        const QString &language,
                        QString *errorMessage)
 {
@@ -210,6 +265,11 @@ bool JsonStorage::save(const QVector<Item> &items,
         itemArray.append(itemToJson(item));
     }
 
+    QJsonArray categoryArray;
+    for (const Category &category : categories) {
+        categoryArray.append(categoryToJson(category));
+    }
+
     QJsonObject settings;
     settings.insert(QStringLiteral("language"), language);
     settings.insert(QStringLiteral("theme"), QStringLiteral("dark"));
@@ -217,9 +277,7 @@ bool JsonStorage::save(const QVector<Item> &items,
     QJsonObject root;
     root.insert(QStringLiteral("schemaVersion"), 1);
     root.insert(QStringLiteral("items"), itemArray);
-    // Categories are implemented in a later phase; older files may contain
-    // them, but this version has no category UI yet.
-    root.insert(QStringLiteral("categories"), QJsonArray());
+    root.insert(QStringLiteral("categories"), categoryArray);
     root.insert(QStringLiteral("settings"), settings);
 
     QSaveFile file(path);

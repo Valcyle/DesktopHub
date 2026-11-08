@@ -1,8 +1,9 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 
-// Home page. Phase 1 shows the empty state; favorites and categories follow
-// once the item model exists.
+// Home dashboard: Favorites first, then one section per category, followed by
+// uncategorized items.
 Item {
     id: page
 
@@ -11,17 +12,36 @@ Item {
         anchors.margins: Theme.pagePadding
         spacing: Theme.spacing
 
-        Text {
-            text: qsTr("Home")
-            color: Theme.textPrimary
-            font.pixelSize: 26
-            font.bold: true
-        }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 12
 
-        Text {
-            text: qsTr("Favorites and categories at a glance.")
-            color: Theme.textSecondary
-            font.pixelSize: 14
+            ColumnLayout {
+                spacing: 4
+
+                Text {
+                    text: qsTr("Home")
+                    color: Theme.textPrimary
+                    font.pixelSize: 26
+                    font.bold: true
+                }
+
+                Text {
+                    text: qsTr("%n item(s)", "", App.items.count)
+                    color: Theme.textSecondary
+                    font.pixelSize: 13
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            HubSearchField {
+                id: searchField
+                Layout.preferredWidth: 260
+                Layout.minimumWidth: 160
+            }
         }
 
         Rectangle {
@@ -33,13 +53,124 @@ Item {
             border.width: 1
             border.color: Theme.border
 
+            ListView {
+                id: homeList
+
+                anchors.fill: parent
+                anchors.margins: 8
+                clip: true
+                spacing: 2
+                model: App.home
+                focus: true
+                currentIndex: count > 0 ? 0 : -1
+
+                Keys.onReturnPressed: {
+                    const itemId = App.home.itemIdAt(currentIndex)
+                    if (itemId.length > 0) {
+                        App.launchItem(itemId)
+                    }
+                }
+                Keys.onEnterPressed: {
+                    const itemId = App.home.itemIdAt(currentIndex)
+                    if (itemId.length > 0) {
+                        App.launchItem(itemId)
+                    }
+                }
+
+                delegate: ItemDelegate {
+                    id: delegate
+
+                    width: ListView.view.width
+                    height: model.isHeader ? 40 : 64
+                    enabled: !model.isHeader
+
+                    onClicked: ListView.view.currentIndex = index
+                    onDoubleClicked: App.launchItem(model.itemId)
+
+                    contentItem: Item {
+                        Text {
+                            visible: model.isHeader
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 6
+                            text: model.title
+                            color: Theme.textSecondary
+                            font.pixelSize: 13
+                            font.bold: true
+                        }
+
+                        RowLayout {
+                            visible: !model.isHeader
+                            anchors.fill: parent
+                            anchors.leftMargin: 12
+                            anchors.rightMargin: 8
+                            spacing: 12
+
+                            Image {
+                                source: "image://itemicon/" + model.itemId + "/" + model.revision
+                                sourceSize: Qt.size(32, 32)
+                                Layout.preferredWidth: 32
+                                Layout.preferredHeight: 32
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                            }
+
+                            ColumnLayout {
+                                Layout.fillWidth: true
+                                spacing: 2
+
+                                Text {
+                                    Layout.fillWidth: true
+                                    text: model.name
+                                    color: Theme.textPrimary
+                                    font.pixelSize: 14
+                                    elide: Text.ElideRight
+                                }
+
+                                Text {
+                                    Layout.fillWidth: true
+                                    text: model.target
+                                    color: Theme.textSecondary
+                                    font.pixelSize: 12
+                                    elide: Text.ElideMiddle
+                                }
+                            }
+
+                            ToolButton {
+                                onClicked: App.items.setFavorite(model.itemId, !model.favorite)
+                                Accessible.name: qsTr("Favorite")
+
+                                contentItem: Text {
+                                    text: model.favorite ? "★" : "☆"
+                                    color: model.favorite ? Theme.accent : Theme.textSecondary
+                                    font.pixelSize: 18
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+                            }
+                        }
+                    }
+
+                    background: Rectangle {
+                        radius: 8
+                        color: !model.isHeader && delegate.hovered
+                               ? Theme.surfaceHover
+                               : "transparent"
+                    }
+                }
+
+                ScrollBar.vertical: ScrollBar {}
+            }
+
             ColumnLayout {
                 anchors.centerIn: parent
                 spacing: 10
+                visible: App.home.count === 0
 
                 Text {
                     Layout.alignment: Qt.AlignHCenter
-                    text: qsTr("No items yet")
+                    text: App.items.count === 0 ? qsTr("No items yet") : qsTr("No matching items")
                     color: Theme.textPrimary
                     font.pixelSize: 18
                     font.bold: true
@@ -47,11 +178,19 @@ Item {
 
                 Text {
                     Layout.alignment: Qt.AlignHCenter
-                    text: qsTr("Apps, folders, and websites you add will appear here.")
+                    text: App.items.count === 0
+                          ? qsTr("Apps, folders, and websites you add will appear here.")
+                          : qsTr("Try a different search.")
                     color: Theme.textSecondary
                     font.pixelSize: 14
                 }
             }
         }
+    }
+
+    Shortcut {
+        sequence: "Ctrl+F"
+        enabled: page.visible
+        onActivated: searchField.forceActiveFocus()
     }
 }

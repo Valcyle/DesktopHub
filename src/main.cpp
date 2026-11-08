@@ -63,9 +63,10 @@ int main(int argc, char *argv[])
 
     // Switch the UI language immediately without restarting the application.
     QObject::connect(settings, &AppSettings::languageChanged, &engine,
-                     [&engine, &applyLanguage]() {
+                     [&engine, &applyLanguage, controller]() {
                          applyLanguage();
                          engine.retranslate();
+                         controller->refreshTranslations();
                      });
 
     // Shell icons are requested from QML as image://itemicon/<id>/<revision>.

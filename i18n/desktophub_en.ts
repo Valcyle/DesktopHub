@@ -67,6 +67,14 @@ Edit the item and register it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>All categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uncategorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Favorite</source>
         <translation type="unfinished"></translation>
     </message>
@@ -79,7 +87,15 @@ Edit the item and register it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>No matching items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add an application, folder, or website to get started.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try a different search or category filter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -100,13 +116,73 @@ Edit the item and register it again.</source>
     </message>
 </context>
 <context>
+    <name>CategoryDialog</name>
+    <message>
+        <source>Rename category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 to 50 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CategoryModel</name>
+    <message>
+        <source>The category no longer exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category name must be 1 to 50 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A category with this name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HomeModel</name>
+    <message>
+        <source>Favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uncategorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HomePage</name>
     <message>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>%n item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Favorites and categories at a glance.</source>
+        <source>Favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -114,7 +190,22 @@ Edit the item and register it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>No matching items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Apps, folders, and websites you add will appear here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try a different search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HubSearchField</name>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -170,6 +261,14 @@ Edit the item and register it again.</source>
     </message>
     <message>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uncategorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -286,7 +385,15 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%n item(s) could not be loaded and were skipped.</source>
+        <source>%1 item(s) could not be loaded and were skipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 category(ies) could not be loaded and were skipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 item(s) referenced a missing category and were treated as uncategorized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -372,6 +479,30 @@ An empty dashboard has been started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign categories when editing an item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No categories yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -385,6 +516,18 @@ An empty dashboard has been started.</source>
     </message>
     <message>
         <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete category &quot;%1&quot;? Items in it will become uncategorized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -128,7 +128,8 @@ Launching:
 - Items can be marked as favorites or unmarked.
 - Home shows a Favorites section first, then category sections.
 - Sort order is ascending creation time. Manual reordering is out of scope.
-- Removing a favorite immediately removes it from the Home favorites section.
+- Remove a favorite immediately removes it from the Home favorites section.
+- Favorite items also remain visible in their category (or uncategorized) section.
 
 ### 5.5 Data storage
 

@@ -34,9 +34,16 @@ qt_add_executable(DesktopHub
     src/core/AppPaths.cpp
     src/core/AppSettings.h
     src/core/AppSettings.cpp
+    src/core/Category.h
     src/core/Item.h
     src/gui/AppController.h
     src/gui/AppController.cpp
+    src/models/CategoryModel.h
+    src/models/CategoryModel.cpp
+    src/models/HomeModel.h
+    src/models/HomeModel.cpp
+    src/models/ItemFilterModel.h
+    src/models/ItemFilterModel.cpp
     src/models/ItemModel.h
     src/models/ItemModel.cpp
     src/services/IconProvider.h
@@ -55,6 +62,8 @@ set(DESKTOPHUB_QML_FILES
     src/gui/qml/AppsPage.qml
     src/gui/qml/SettingsPage.qml
     src/gui/qml/ItemDialog.qml
+    src/gui/qml/CategoryDialog.qml
+    src/gui/qml/HubSearchField.qml
 )
 
 foreach(qml_file IN LISTS DESKTOPHUB_QML_FILES)

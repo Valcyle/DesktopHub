@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QAbstractListModel>
+#include <QHash>
 #include <QVector>
 #include <QtQml/qqmlregistration.h>
 
@@ -22,6 +23,7 @@ public:
         TypeRole,
         TargetRole,
         CategoryIdRole,
+        CategoryNameRole,
         FavoriteRole,
         CreatedAtRole,
         RevisionRole,
@@ -40,11 +42,13 @@ public:
     Q_INVOKABLE QString addItem(const QString &name,
                                 const QString &type,
                                 const QString &target,
+                                const QString &categoryId,
                                 bool favorite);
     Q_INVOKABLE QString updateItem(const QString &id,
                                    const QString &name,
                                    const QString &type,
                                    const QString &target,
+                                   const QString &categoryId,
                                    bool favorite);
     Q_INVOKABLE void removeItem(const QString &id);
     Q_INVOKABLE void setFavorite(const QString &id, bool favorite);
@@ -59,6 +63,14 @@ public:
     void setItems(const QVector<Item> &items);
     Item itemById(const QString &id) const;
 
+    // Category names are supplied by the controller so the model can expose
+    // the display name and support search without owning the category list.
+    void setCategoryNames(const QHash<QString, QString> &names);
+
+    // Used when a category is deleted: affected items become uncategorized.
+    void clearCategory(const QString &categoryId);
+    void pruneUnknownCategories();
+
 signals:
     void countChanged();
     // Emitted after any successful change so the controller can auto-save.
@@ -70,7 +82,9 @@ private:
                                  const QString &type,
                                  const QString &target,
                                  QString *normalizedTargetOut) const;
+    QString normalizeCategoryId(const QString &categoryId) const;
     int rowForId(const QString &id) const;
 
     QVector<Item> m_items;
+    QHash<QString, QString> m_categoryNames;
 };

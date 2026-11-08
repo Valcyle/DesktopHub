@@ -50,6 +50,12 @@ The minimum supported Qt version remains 6.5, as declared in `CMakeLists.txt`.
 - Default language: `QLocale::system().uiLanguages()`, so the Windows display language is used rather than the regional format alone
 - Switching: `QQmlEngine::retranslate()` applies the new language immediately
 
+## Component naming note
+
+Qt 6.12 ships a `SearchField` type through the Qt Quick Controls styles. An unqualified `SearchField {}` therefore resolves to the style component instead of a local file. Our search field is named `HubSearchField` to avoid that collision.
+
+Home section headers and category names are produced in C++. They are rebuilt after a language change through `AppController::refreshTranslations()`.
+
 ## Verification
 
 Phase 0 is complete when the following commands configure, build, and start a Qt Quick window:

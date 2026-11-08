@@ -6,13 +6,16 @@
 #include <QStringList>
 
 #include "core/AppSettings.h"
-#include "models/ItemModel.h"
 #include "services/JsonStorage.h"
 
 AppController::AppController(QObject *parent)
     : QObject(parent)
     , m_items(new ItemModel(this))
+    , m_categories(new CategoryModel(this))
+    , m_filteredItems(new ItemFilterModel(this))
+    , m_home(new HomeModel(m_items, m_categories, this))
 {
+    m_filteredItems->setSourceItemModel(m_items);
 }
 
 void AppController::initialize(AppSettings *settings)
@@ -31,12 +34,61 @@ void AppController::initialize(AppSettings *settings)
         }
     });
 
+    connect(m_categories, &CategoryModel::categoriesChanged,
+            this, &AppController::onCategoriesChanged);
+
     load();
 }
 
 ItemModel *AppController::items() const
 {
     return m_items;
+}
+
+CategoryModel *AppController::categories() const
+{
+    return m_categories;
+}
+
+ItemFilterModel *AppController::filteredItems() const
+{
+    return m_filteredItems;
+}
+
+HomeModel *AppController::home() const
+{
+    return m_home;
+}
+
+QVariantList AppController::categoryOptions() const
+{
+    QVariantList options;
+    const QVector<Category> categories = m_categories->categories();
+    options.reserve(categories.size());
+    for (const Category &category : categories) {
+        options.append(QVariantMap{
+            { QStringLiteral("id"), category.id },
+            { QStringLiteral("name"), category.name },
+        });
+    }
+    return options;
+}
+
+QString AppController::searchText() const
+{
+    return m_searchText;
+}
+
+void AppController::setSearchText(const QString &text)
+{
+    if (m_searchText == text) {
+        return;
+    }
+
+    m_searchText = text;
+    m_filteredItems->setSearchText(text);
+    m_home->setSearchText(text);
+    emit searchTextChanged();
 }
 
 QString AppController::startupWarning() const
@@ -92,6 +144,23 @@ void AppController::launchItem(const QString &id)
     }
 }
 
+QString AppController::addCategory(const QString &name)
+{
+    return m_categories->addCategory(name);
+}
+
+QString AppController::renameCategory(const QString &id, const QString &name)
+{
+    return m_categories->renameCategory(id, name);
+}
+
+void AppController::deleteCategory(const QString &id)
+{
+    // Items must become uncategorized before the category disappears.
+    m_items->clearCategory(id);
+    m_categories->removeCategory(id);
+}
+
 bool AppController::save()
 {
     if (m_loading) {
@@ -108,7 +177,7 @@ bool AppController::save()
 
     QString error;
     const QString language = m_settings ? m_settings->language() : QStringLiteral("en");
-    if (!JsonStorage::save(m_items->items(), language, &error)) {
+    if (!JsonStorage::save(m_items->items(), m_categories->categories(), language, &error)) {
         emit errorOccurred(tr("Could not save data"), error, true);
         return false;
     }
@@ -146,11 +215,35 @@ QString AppController::nameFromTarget(const QString &type, const QString &target
     return info.completeBaseName().isEmpty() ? info.fileName() : info.completeBaseName();
 }
 
+void AppController::refreshTranslations()
+{
+    m_home->rebuild();
+}
+
+void AppController::onCategoriesChanged()
+{
+    m_items->setCategoryNames(m_categories->nameMap());
+    m_items->pruneUnknownCategories();
+
+    emit categoryOptionsChanged();
+
+    if (!m_loading) {
+        save();
+    }
+
+    m_home->rebuild();
+}
+
 void AppController::load()
 {
     m_loading = true;
 
     const StorageLoadResult result = JsonStorage::load();
+
+    // Categories must be known before items are loaded so category references
+    // can be resolved to display names.
+    m_categories->setCategories(result.categories);
+    m_items->setCategoryNames(m_categories->nameMap());
     m_items->setItems(result.items);
 
     if (m_settings && !result.language.isEmpty()) {
@@ -170,5 +263,8 @@ void AppController::load()
     m_startupWarning = messages.join(QStringLiteral("\n\n"));
 
     m_loading = false;
+
+    m_home->rebuild();
+    emit categoryOptionsChanged();
     emit startupWarningChanged();
 }
